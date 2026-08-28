@@ -316,7 +316,7 @@ function Index() {
             <p className="mt-6 text-sm text-muted-foreground">
               ¿Prefieres hablar?{" "}
               <a href="tel:+34910000000" className="font-semibold text-foreground underline-offset-4 hover:underline">
-                Llámanos al 910 000 000
+                Llámanos al +34 604 126 759
               </a>
             </p>
           </div>
