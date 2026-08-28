@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import logoWhite from "@/assets/axher-logo-white.png.asset.json";
+import { ContactForm } from "@/components/contact-form";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -311,16 +312,13 @@ function Index() {
                 </li>
               ))}
             </ul>
-            <div className="mt-9 flex flex-wrap justify-center gap-3">
-              <Button variant="hero" size="xl" asChild>
-                <a href="mailto:hola@axher.es?subject=Auditor%C3%ADa%20gratuita">
-                  Reservar auditoría <ArrowRight />
-                </a>
-              </Button>
-              <Button variant="outlineLight" size="xl" asChild>
-                <a href="tel:+34910000000">Llamar al 910 000 000</a>
-              </Button>
-            </div>
+            <ContactForm />
+            <p className="mt-6 text-sm text-muted-foreground">
+              ¿Prefieres hablar?{" "}
+              <a href="tel:+34910000000" className="font-semibold text-foreground underline-offset-4 hover:underline">
+                Llámanos al 910 000 000
+              </a>
+            </p>
           </div>
         </section>
       </main>
