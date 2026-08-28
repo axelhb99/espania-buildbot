@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import logoWhite from "@/assets/axher-logo-white.png.asset.json";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -122,8 +123,8 @@ function Index() {
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-          <a href="#top" className="font-display text-lg font-extrabold tracking-tight">
-            AXHER
+          <a href="#top" className="flex items-center">
+            <img src={logoWhite.url} alt="AXHER" className="h-8 w-auto" />
           </a>
           <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
             <a href="#servicios" className="transition-colors hover:text-foreground">
@@ -326,7 +327,7 @@ function Index() {
 
       <footer className="border-t border-border py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 text-sm text-muted-foreground md:flex-row">
-          <span className="font-display font-extrabold text-foreground">AXHER</span>
+          <img src={logoWhite.url} alt="AXHER" className="h-7 w-auto" />
           <span>Automatización con IA para reformas y construcción · España</span>
           <span>© {new Date().getFullYear()} AXHER</span>
         </div>
