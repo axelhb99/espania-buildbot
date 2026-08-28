@@ -21,13 +21,13 @@ import heroObra from "@/assets/hero-obra.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Obralia IA | Automatización con IA para reformas y construcción" },
+      { title: "AXHER | Automatización con IA para reformas y construcción" },
       {
         name: "description",
         content:
           "Agencia de automatización con IA para empresas de reformas y construcción en España: presupuestos automáticos, captación de leads y seguimiento de obra 24/7.",
       },
-      { property: "og:title", content: "Obralia IA | Automatización con IA para reformas" },
+      { property: "og:title", content: "AXHER | Automatización con IA para reformas" },
       {
         property: "og:description",
         content:
@@ -123,7 +123,7 @@ function Index() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
           <a href="#top" className="font-display text-lg font-extrabold tracking-tight">
-            OBRALIA<span className="text-primary">.IA</span>
+            AXHER
           </a>
           <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
             <a href="#servicios" className="transition-colors hover:text-foreground">
@@ -312,7 +312,7 @@ function Index() {
             </ul>
             <div className="mt-9 flex flex-wrap justify-center gap-3">
               <Button variant="hero" size="xl" asChild>
-                <a href="mailto:hola@obralia.ia?subject=Auditor%C3%ADa%20gratuita">
+                <a href="mailto:hola@axher.es?subject=Auditor%C3%ADa%20gratuita">
                   Reservar auditoría <ArrowRight />
                 </a>
               </Button>
@@ -326,11 +326,9 @@ function Index() {
 
       <footer className="border-t border-border py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 text-sm text-muted-foreground md:flex-row">
-          <span className="font-display font-extrabold text-foreground">
-            OBRALIA<span className="text-primary">.IA</span>
-          </span>
+          <span className="font-display font-extrabold text-foreground">AXHER</span>
           <span>Automatización con IA para reformas y construcción · España</span>
-          <span>© {new Date().getFullYear()} Obralia IA</span>
+          <span>© {new Date().getFullYear()} AXHER</span>
         </div>
       </footer>
     </div>
