@@ -17,6 +17,12 @@ import {
   HardHat,
   ArrowRight,
   Check,
+  Clock3,
+  PhoneMissed,
+  FileWarning,
+  Copy,
+  Quote,
+  MessageCircle,
 } from "lucide-react";
 import heroObra from "@/assets/hero-obra.jpg";
 
@@ -41,6 +47,9 @@ export const Route = createFileRoute("/")({
   }),
   component: Index,
 });
+
+const WHATSAPP_URL =
+  "https://wa.me/34604126759?text=Hola%2C%20estoy%20en%20la%20web%20de%20AXHER%20y%20quiero%20informaci%C3%B3n%20sobre%20automatizaci%C3%B3n";
 
 const servicios = [
   {
@@ -75,6 +84,25 @@ const servicios = [
   },
 ];
 
+const problemas = [
+  {
+    icon: Clock3,
+    text: "Presupuestos que tardan una semana mientras el cliente ya ha firmado con otro.",
+  },
+  {
+    icon: PhoneMissed,
+    text: "Llamadas perdidas porque todo el equipo está a pie de obra.",
+  },
+  {
+    icon: FileWarning,
+    text: "Albaranes en la guantera de la furgoneta y desviaciones que aparecen al cerrar la obra.",
+  },
+  {
+    icon: Copy,
+    text: "Un administrativo dedicado a copiar datos entre Excel, el ERP y el correo.",
+  },
+];
+
 const pasos = [
   {
     n: "01",
@@ -106,6 +134,14 @@ const faqs = [
     a: "Sí. La mayoría de nuestros clientes son constructoras y empresas de reformas de 5 a 60 personas, donde el cuello de botella suele ser una o dos personas en oficina técnica.",
   },
   {
+    q: "¿Cuánto tardáis en implantarlo?",
+    a: "El primer piloto está funcionando en 21 días desde la auditoría. La implantación completa del resto de procesos suele llevar entre 2 y 4 meses, siempre por fases y con resultados medibles en cada una.",
+  },
+  {
+    q: "¿Qué pasa si ya usamos un ERP o ningún software?",
+    a: "Si ya tenéis ERP, nos conectamos a él por API o por los ficheros que ya exportáis, sin tocar vuestros procesos internos. Si trabajáis solo con Excel y WhatsApp, montamos la base mínima necesaria y automatizamos sobre ella: no hace falta comprar un ERP para empezar.",
+  },
+  {
     q: "¿Tenemos que cambiar de software?",
     a: "No. Nos integramos con lo que ya usáis: Presto, Excel, Holded, A3, Gmail/Outlook, WhatsApp Business y ERPs del sector. Si algo no tiene integración, la construimos.",
   },
@@ -123,9 +159,13 @@ function Index() {
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-          <a href="#top" className="flex items-center">
-            <img src={logoWhite.url} alt="AXHER" className="h-8 w-auto" />
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
+          <a href="#top" className="flex min-w-0 items-center">
+            <img
+              src={logoWhite.url}
+              alt="Logotipo de AXHER, agencia de automatización con IA"
+              className="h-8 w-auto"
+            />
           </a>
           <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
             <a href="#servicios" className="transition-colors hover:text-foreground">
@@ -141,18 +181,18 @@ function Index() {
               FAQ
             </a>
           </nav>
-          <Button variant="hero" size="sm" asChild>
+          <Button variant="hero" size="sm" asChild className="shrink-0">
             <a href="#contacto">Auditoría gratuita</a>
           </Button>
         </div>
       </header>
 
-      <main id="top">
+      <main id="top" className="pb-20 md:pb-0">
         {/* HERO */}
         <section className="relative isolate overflow-hidden">
           <img
             src={heroObra}
-            alt="Jefe de obra revisando el avance de una reforma con una tablet"
+            alt="Jefe de obra revisando en una tablet el avance de una reforma en España"
             width={1600}
             height={1104}
             className="absolute inset-0 h-full w-full object-cover"
@@ -162,7 +202,7 @@ function Index() {
             style={{ backgroundImage: "var(--gradient-hero)" }}
             aria-hidden="true"
           />
-          <div className="relative mx-auto max-w-6xl px-5 py-28 md:py-40">
+          <div className="relative mx-auto max-w-6xl px-5 py-24 md:py-40">
             <p className="eyebrow">Automatización con IA · España</p>
             <h1 className="mt-5 max-w-3xl text-4xl leading-[1.05] md:text-6xl">
               Vuestro equipo está en la obra.
@@ -184,7 +224,10 @@ function Index() {
                 <a href="#servicios">Ver qué automatizamos</a>
               </Button>
             </div>
-            <p className="mt-6 text-sm text-muted-foreground">
+            <p className="mt-5 text-sm font-semibold tracking-wide text-foreground/90">
+              Sin permanencia · Piloto en 21 días · Datos alojados en la UE
+            </p>
+            <p className="mt-3 text-sm text-muted-foreground">
               Trabajamos con constructoras, reformistas integrales e instaladores en Madrid,
               Barcelona, Valencia y Bilbao.
             </p>
@@ -193,44 +236,49 @@ function Index() {
         </section>
 
         {/* DOLOR */}
-        <section className="mx-auto max-w-6xl px-5 py-20">
-          <div className="grid gap-10 md:grid-cols-[1fr_1.1fr] md:items-center">
-            <div>
-              <p className="eyebrow">El problema</p>
-              <h2 className="mt-4 text-3xl md:text-4xl">
-                No perdéis obras por precio. Las perdéis por tiempo de respuesta.
-              </h2>
+        <section className="section-base">
+          <div className="mx-auto max-w-6xl px-5 py-20 md:py-24">
+            <div className="grid gap-10 md:grid-cols-[1fr_1.1fr] md:items-center">
+              <div>
+                <p className="eyebrow">El problema</p>
+                <h2 className="mt-4 text-3xl md:text-4xl">
+                  No perdéis obras por precio. Las perdéis por tiempo de respuesta.
+                </h2>
+              </div>
+              <ul className="grid gap-4 sm:grid-cols-2">
+                {problemas.map(({ icon: Icon, text }) => (
+                  <li
+                    key={text}
+                    className="flex min-w-0 items-start gap-4 rounded-lg border border-border/70 bg-card/50 p-5"
+                  >
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/12 text-primary">
+                      <Icon className="size-5" />
+                    </span>
+                    <span className="min-w-0 text-sm leading-relaxed text-muted-foreground">
+                      {text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul className="space-y-4">
-              {[
-                "Presupuestos que tardan una semana mientras el cliente ya ha firmado con otro.",
-                "Llamadas perdidas porque todo el equipo está a pie de obra.",
-                "Albaranes en la guantera de la furgoneta y desviaciones que aparecen al cerrar la obra.",
-                "Un administrativo dedicado a copiar datos entre Excel, el ERP y el correo.",
-              ].map((t) => (
-                <li key={t} className="flex gap-3 border-l-2 border-primary/70 pl-4 text-muted-foreground">
-                  {t}
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
 
         {/* SERVICIOS */}
-        <section id="servicios" className="border-y border-border bg-card/40 py-20">
-          <div className="mx-auto max-w-6xl px-5">
+        <section id="servicios" className="section-alt border-y border-border">
+          <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
             <p className="eyebrow">Servicios</p>
             <h2 className="mt-4 max-w-2xl text-3xl md:text-4xl">
               Automatizaciones diseñadas para el día a día de una obra
             </h2>
-            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
               {servicios.map(({ icon: Icon, title, text }) => (
-                <article key={title} className="surface-card group p-6 transition-colors hover:border-primary/60">
-                  <div className="flex size-11 items-center justify-center rounded-md bg-primary/12 text-primary">
-                    <Icon className="size-5" />
+                <article key={title} className="surface-card card-lift flex h-full flex-col p-7 md:p-8">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-primary/12 text-primary">
+                    <Icon className="size-6" />
                   </div>
-                  <h3 className="mt-5 text-lg">{title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p>
+                  <h3 className="mt-6 text-lg">{title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
                 </article>
               ))}
             </div>
@@ -238,38 +286,65 @@ function Index() {
         </section>
 
         {/* RESULTADOS */}
-        <section id="resultados" className="mx-auto max-w-6xl px-5 py-20">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {metricas.map((m) => (
-              <div key={m.label} className="border-t-2 border-primary pt-5">
-                <p className="font-display text-4xl font-extrabold text-foreground">{m.valor}</p>
-                <p className="mt-2 text-sm text-muted-foreground">{m.label}</p>
-              </div>
-            ))}
+        <section id="resultados" className="section-base">
+          <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {metricas.map((m) => (
+                <div key={m.label} className="border-t-2 border-primary pt-5">
+                  <p className="font-display text-5xl font-extrabold leading-none tracking-tight text-foreground md:text-6xl">
+                    {m.valor}
+                  </p>
+                  <p className="mt-3 text-sm leading-snug text-muted-foreground">{m.label}</p>
+                </div>
+              ))}
+            </div>
+
+            <blockquote className="surface-card mt-14 p-8 md:p-10">
+              <Quote className="size-8 text-primary/40" aria-hidden="true" />
+              <p className="mt-4 text-xl leading-relaxed md:text-2xl">
+                “Antes cerrábamos tres presupuestos grandes al mes porque no dábamos abasto. Ahora
+                salen el mismo día de la visita y el cliente los firma antes de que le llegue la
+                competencia.”
+              </p>
+              <footer className="mt-6 flex items-center gap-4">
+                <span
+                  className="grid size-12 shrink-0 place-items-center rounded-full bg-primary/15 font-display text-base font-extrabold text-primary"
+                  aria-hidden="true"
+                >
+                  JM
+                </span>
+                <span className="min-w-0 text-sm text-muted-foreground">
+                  <span className="block font-semibold text-foreground">J. M., director técnico</span>
+                  Reformas integrales · 24 empleados · Madrid (cliente anónimo por acuerdo de
+                  confidencialidad)
+                </span>
+              </footer>
+            </blockquote>
+
+            <div className="mt-12 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <Button variant="hero" size="xl" asChild className="w-full sm:w-auto">
+                <a href="#contacto">
+                  Pedir auditoría gratuita <ArrowRight />
+                </a>
+              </Button>
+              <p className="text-sm text-muted-foreground">
+                30 minutos · sin compromiso · con estimación de ahorro
+              </p>
+            </div>
           </div>
-          <blockquote className="surface-card mt-14 p-8 md:p-10">
-            <p className="text-xl leading-relaxed md:text-2xl">
-              “Antes cerrábamos tres presupuestos grandes al mes porque no dábamos abasto. Ahora
-              salen el mismo día de la visita y el cliente los firma antes de que le llegue la
-              competencia.”
-            </p>
-            <footer className="mt-6 text-sm text-muted-foreground">
-              Dirección técnica · Reformas integrales, 24 empleados, Madrid
-            </footer>
-          </blockquote>
         </section>
 
         {/* PROCESO */}
-        <section id="proceso" className="border-y border-border bg-card/40 py-20">
-          <div className="mx-auto max-w-6xl px-5">
+        <section id="proceso" className="section-alt border-y border-border">
+          <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
             <p className="eyebrow">Cómo trabajamos</p>
             <h2 className="mt-4 text-3xl md:text-4xl">Del caos al sistema en tres fases</h2>
-            <div className="mt-12 grid gap-6 md:grid-cols-3">
+            <div className="mt-12 grid gap-6 md:grid-cols-3 lg:gap-8">
               {pasos.map((p) => (
-                <div key={p.n} className="surface-card p-7">
+                <div key={p.n} className="surface-card card-lift flex h-full flex-col p-7 md:p-8">
                   <span className="font-display text-5xl font-extrabold text-primary/25">{p.n}</span>
                   <h3 className="mt-3 text-lg">{p.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
                 </div>
               ))}
             </div>
@@ -277,22 +352,24 @@ function Index() {
         </section>
 
         {/* FAQ */}
-        <section id="faq" className="mx-auto max-w-3xl px-5 py-20">
-          <p className="eyebrow">Preguntas frecuentes</p>
-          <h2 className="mt-4 text-3xl md:text-4xl">Lo que suelen preguntarnos</h2>
-          <Accordion type="single" collapsible className="mt-8">
-            {faqs.map((f) => (
-              <AccordionItem key={f.q} value={f.q}>
-                <AccordionTrigger className="text-left text-base">{f.q}</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+        <section id="faq" className="section-base">
+          <div className="mx-auto max-w-3xl px-5 py-20 md:py-28">
+            <p className="eyebrow">Preguntas frecuentes</p>
+            <h2 className="mt-4 text-3xl md:text-4xl">Lo que suelen preguntarnos</h2>
+            <Accordion type="single" collapsible className="mt-8">
+              {faqs.map((f) => (
+                <AccordionItem key={f.q} value={f.q}>
+                  <AccordionTrigger className="text-left text-base">{f.q}</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </section>
 
         {/* CTA */}
-        <section id="contacto" className="border-t border-border bg-card/60 py-20">
-          <div className="mx-auto max-w-3xl px-5 text-center">
+        <section id="contacto" className="section-alt border-t border-border">
+          <div className="mx-auto max-w-3xl px-5 py-20 text-center md:py-28">
             <h2 className="text-3xl md:text-4xl">
               Auditoría gratuita de <span className="text-hero-gradient">30 minutos</span>
             </h2>
@@ -321,7 +398,7 @@ function Index() {
                 </a>
               </p>
               <a
-                href="https://wa.me/34604126759?text=Hola%2C%20estoy%20en%20la%20web%20de%20AXHER%20y%20quiero%20informaci%C3%B3n%20sobre%20automatizaci%C3%B3n"
+                href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105"
@@ -336,9 +413,31 @@ function Index() {
         </section>
       </main>
 
+      {/* CTA STICKY MÓVIL */}
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 px-4 py-3 backdrop-blur md:hidden">
+        <div className="grid grid-cols-2 gap-3">
+          <Button variant="hero" size="lg" asChild>
+            <a href="#contacto">Auditoría gratuita</a>
+          </Button>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#25D366] px-4 text-sm font-semibold text-white"
+          >
+            <MessageCircle className="size-4" />
+            WhatsApp
+          </a>
+        </div>
+      </div>
+
       <footer className="border-t border-border py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 text-sm text-muted-foreground md:flex-row">
-          <img src={logoWhite.url} alt="AXHER" className="h-7 w-auto" />
+          <img
+            src={logoWhite.url}
+            alt="Logotipo de AXHER en blanco sobre fondo oscuro"
+            className="h-7 w-auto"
+          />
           <span>Automatización con IA para reformas y construcción · España</span>
           <span>© {new Date().getFullYear()} AXHER</span>
         </div>
