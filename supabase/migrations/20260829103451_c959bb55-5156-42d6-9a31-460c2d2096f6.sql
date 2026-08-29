@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Solo usuarios autenticados pueden leer solicitudes" ON public.leads;
