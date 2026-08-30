@@ -25,6 +25,13 @@ const leadSchema = z.object({
     .min(6, "Introduce un teléfono válido")
     .max(20, "Introduce un teléfono válido")
     .regex(/^[+0-9 ().-]+$/, "Introduce un teléfono válido"),
+  email: z
+    .string()
+    .trim()
+    .max(255, "El email es demasiado largo")
+    .email("Introduce un email válido (ejemplo: nombre@empresa.es)")
+    .optional()
+    .or(z.literal("")),
   descripcion: z
     .string()
     .trim()
@@ -34,7 +41,8 @@ const leadSchema = z.object({
 
 type LeadForm = z.infer<typeof leadSchema>;
 
-const emptyForm: LeadForm = { nombre: "", empresa: "", telefono: "", descripcion: "" };
+const emptyForm: LeadForm = { nombre: "", empresa: "", telefono: "", email: "", descripcion: "" };
+
 
 export function ContactForm() {
   const [form, setForm] = useState<LeadForm>(emptyForm);
