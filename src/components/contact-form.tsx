@@ -67,7 +67,11 @@ export function ContactForm() {
       return;
     }
     setSending(true);
-    const { error } = await supabase.from("leads").insert(parsed.data);
+    const { email, ...rest } = parsed.data;
+    const { error } = await supabase
+      .from("leads")
+      .insert({ ...rest, email: email ? email : null });
+
     setSending(false);
     if (error) {
       toast.error("No se pudo enviar la solicitud. Inténtalo de nuevo o llámanos.");
