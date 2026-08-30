@@ -91,11 +91,17 @@ export function ContactForm() {
             id="nombre"
             value={form.nombre}
             onChange={update("nombre")}
+            aria-invalid={!!errors.nombre}
+            aria-describedby={errors.nombre ? "nombre-error" : undefined}
             placeholder="Tu nombre y apellidos"
             autoComplete="name"
             maxLength={100}
           />
-          {errors.nombre && <p className="text-xs text-destructive">{errors.nombre}</p>}
+          {errors.nombre && (
+            <p id="nombre-error" role="alert" className="text-xs text-destructive">
+              {errors.nombre}
+            </p>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="empresa">Empresa</Label>
@@ -103,11 +109,17 @@ export function ContactForm() {
             id="empresa"
             value={form.empresa}
             onChange={update("empresa")}
+            aria-invalid={!!errors.empresa}
+            aria-describedby={errors.empresa ? "empresa-error" : undefined}
             placeholder="Reformas García S.L."
             autoComplete="organization"
             maxLength={150}
           />
-          {errors.empresa && <p className="text-xs text-destructive">{errors.empresa}</p>}
+          {errors.empresa && (
+            <p id="empresa-error" role="alert" className="text-xs text-destructive">
+              {errors.empresa}
+            </p>
+          )}
         </div>
       </div>
       <div className="space-y-2">
@@ -117,12 +129,14 @@ export function ContactForm() {
           type="tel"
           value={form.telefono}
           onChange={update("telefono")}
+          aria-invalid={!!errors.telefono}
+          aria-describedby={errors.telefono ? "telefono-error" : undefined}
           placeholder="600 123 456"
           autoComplete="tel"
           maxLength={20}
         />
         {errors.telefono && (
-          <p role="alert" className="text-xs text-destructive">
+          <p id="telefono-error" role="alert" className="text-xs text-destructive">
             {errors.telefono}
           </p>
         )}
@@ -159,11 +173,17 @@ export function ContactForm() {
           id="descripcion"
           value={form.descripcion}
           onChange={update("descripcion")}
+            aria-invalid={!!errors.descripcion}
+            aria-describedby={errors.descripcion ? "descripcion-error" : undefined}
           placeholder="Qué procesos os quitan más tiempo: presupuestos, seguimiento de obra, atención a clientes…"
           rows={4}
           maxLength={2000}
         />
-        {errors.descripcion && <p className="text-xs text-destructive">{errors.descripcion}</p>}
+        {errors.descripcion && (
+            <p id="descripcion-error" role="alert" className="text-xs text-destructive">
+              {errors.descripcion}
+            </p>
+          )}
       </div>
       <Button type="submit" variant="hero" size="xl" className="w-full" disabled={sending}>
         {sending ? <LoaderCircle className="animate-spin" /> : <Send />}
