@@ -121,8 +121,38 @@ export function ContactForm() {
           autoComplete="tel"
           maxLength={20}
         />
-        {errors.telefono && <p className="text-xs text-destructive">{errors.telefono}</p>}
+        {errors.telefono && (
+          <p role="alert" className="text-xs text-destructive">
+            {errors.telefono}
+          </p>
+        )}
       </div>
+      <div className="space-y-2">
+        <Label htmlFor="email">
+          Email <span className="text-muted-foreground">(opcional)</span>
+        </Label>
+        <Input
+          id="email"
+          type="email"
+          inputMode="email"
+          value={form.email ?? ""}
+          onChange={update("email")}
+          placeholder="nombre@empresa.es"
+          autoComplete="email"
+          maxLength={255}
+          aria-invalid={!!errors.email}
+          aria-describedby={errors.email ? "email-error" : undefined}
+        />
+        {errors.email && (
+          <p id="email-error" role="alert" className="text-xs text-destructive">
+            {errors.email}
+          </p>
+        )}
+        <p className="text-xs text-muted-foreground">
+          Si nos dejas tu email, te enviamos confirmación de la solicitud.
+        </p>
+      </div>
+
       <div className="space-y-2">
         <Label htmlFor="descripcion">Descripción del proyecto</Label>
         <Textarea
