@@ -3,7 +3,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { LoaderCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -75,14 +74,6 @@ function AuthPage() {
     }
   };
 
-  const onGoogle = async () => {
-    try {
-      await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
-    } catch {
-      toast.error("No se pudo iniciar sesión con Google.");
-    }
-  };
-
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-4 py-16">
       <div className="surface-card w-full max-w-md space-y-6 p-6 md:p-8">
@@ -122,9 +113,6 @@ function AuthPage() {
           </Button>
         </form>
 
-        <Button type="button" variant="outline" className="w-full" onClick={onGoogle}>
-          Continuar con Google
-        </Button>
 
         <button
           type="button"
