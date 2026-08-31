@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Send, LoaderCircle } from "lucide-react";
@@ -45,6 +46,7 @@ const emptyForm: LeadForm = { nombre: "", empresa: "", telefono: "", email: "", 
 
 
 export function ContactForm() {
+  const navigate = useNavigate();
   const [form, setForm] = useState<LeadForm>(emptyForm);
   const [errors, setErrors] = useState<Partial<Record<keyof LeadForm, string>>>({});
   const [sending, setSending] = useState(false);
@@ -77,9 +79,12 @@ export function ContactForm() {
       toast.error("No se pudo enviar la solicitud. Inténtalo de nuevo o llámanos.");
       return;
     }
-    toast.success("Solicitud enviada. Te contactamos en menos de 24 h laborables.");
-    setForm(emptyForm);
+setForm(emptyForm);
     setErrors({});
+    navigate({
+      to: "/gracias",
+      search: { nombre: parsed.data.nombre, empresa: parsed.data.empresa },
+    });
   };
 
   return (
