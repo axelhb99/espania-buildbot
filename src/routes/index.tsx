@@ -461,6 +461,10 @@ function Index() {
               <Link to="/cookies" className="transition-colors hover:text-foreground">
                 Cookies
               </Link>
+              <span aria-hidden="true">·</span>
+              <Link to="/panel" className="transition-colors hover:text-foreground">
+                Panel
+              </Link>
             </nav>
           </div>
           <span className="text-sm text-muted-foreground">
