@@ -6,7 +6,7 @@
 //
 // Variables de entorno (secrets) que necesita:
 //   RESEND_API_KEY          -> clave de API de Resend (https://resend.com)
-//   LEAD_NOTIFICATION_TO    -> email que recibe los avisos (por defecto hola@axher.es)
+//   LEAD_NOTIFICATION_TO    -> email que recibe los avisos (por defecto axher2204@gmail.com)
 //   LEAD_NOTIFICATION_FROM  -> remitente verificado en Resend
 //                              (por defecto "AXHER <onboarding@resend.dev>")
 
@@ -58,7 +58,7 @@ Deno.serve(async (req) => {
   }
 
   const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-  const to = Deno.env.get("LEAD_NOTIFICATION_TO") ?? "hola@axher.es";
+  const to = Deno.env.get("LEAD_NOTIFICATION_TO") ?? "axher2204@gmail.com";
   const from = Deno.env.get("LEAD_NOTIFICATION_FROM") ?? "AXHER <onboarding@resend.dev>";
 
   if (!RESEND_API_KEY) {

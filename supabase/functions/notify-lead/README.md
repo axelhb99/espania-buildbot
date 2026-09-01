@@ -10,7 +10,8 @@ guardado y aparece igualmente en el panel de administración.
 ## Puesta en marcha (una sola vez)
 
 1. **Crear una cuenta en [Resend](https://resend.com)** (plan gratuito: 3.000
-   emails/mes).
+   emails/mes). Regístrate con `axher2204@gmail.com` para poder recibir las
+   pruebas con el remitente `onboarding@resend.dev`.
 2. **Verificar el dominio `axher.es`** en Resend → _Domains_ → _Add Domain_, y
    añadir los registros DNS que indica. Mientras tanto se puede probar con el
    remitente de pruebas `onboarding@resend.dev` (solo entrega al email con el
@@ -22,7 +23,7 @@ guardado y aparece igualmente en el panel de administración.
    | Secret | Valor | Obligatorio |
    | --- | --- | --- |
    | `RESEND_API_KEY` | la API key de Resend | Sí |
-   | `LEAD_NOTIFICATION_TO` | email que recibe los avisos | No (por defecto `hola@axher.es`) |
+   | `LEAD_NOTIFICATION_TO` | email que recibe los avisos | No (por defecto `axher2204@gmail.com`) |
    | `LEAD_NOTIFICATION_FROM` | remitente verificado, p. ej. `AXHER <web@axher.es>` | No (por defecto `AXHER <onboarding@resend.dev>`) |
 
 5. **Desplegar la función.** Lovable la despliega automáticamente al sincronizar
