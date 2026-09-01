@@ -76,8 +76,8 @@ function Gracias() {
               ¡Gracias{nombre ? `, ${nombre}` : ""}!
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-lg text-muted-foreground">
-              Hemos recibido tu solicitud{empresa ? ` de ${empresa}` : ""} y ya está en
-              manos de nuestro equipo.
+              Hemos recibido tu solicitud{empresa ? ` de ${empresa}` : ""} y ya está en manos de
+              nuestro equipo.
             </p>
 
             <div className="mx-auto mt-10 max-w-md space-y-3 text-left">
@@ -90,7 +90,10 @@ function Gracias() {
                   key={t}
                   className="flex items-start gap-3 rounded-lg border border-border/70 bg-card/50 p-4 text-sm text-muted-foreground"
                 >
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                  <CheckCircle2
+                    className="mt-0.5 size-4 shrink-0 text-primary"
+                    aria-hidden="true"
+                  />
                   {t}
                 </div>
               ))}
@@ -103,7 +106,12 @@ function Gracias() {
               </p>
               <div className="mt-6 grid gap-3">
                 <Button variant="hero" size="lg" asChild className="w-full">
-                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent("whatsapp_click")}
+                  >
                     <MessageCircle className="size-4" aria-hidden="true" />
                     Seguir en contacto por WhatsApp
                   </a>
@@ -165,9 +173,7 @@ function Gracias() {
               </Link>
             </nav>
           </div>
-          <span className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} AXHER
-          </span>
+          <span className="text-sm text-muted-foreground">© {new Date().getFullYear()} AXHER</span>
         </div>
       </footer>
     </div>

@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
  * `page_events` (sin cookies ni datos personales) y se consultan desde el
  * panel de administración.
  */
-export type FunnelEvent = "landing_view" | "gracias_view" | "form_submit";
+export type FunnelEvent = "landing_view" | "gracias_view" | "form_submit" | "whatsapp_click";
 
 /**
  * Registra un evento de navegación. No bloquea la interfaz y nunca lanza:

@@ -7,6 +7,11 @@ guardar el lead en la tabla `leads`.
 El envío **no bloquea** el formulario: si el email falla, el lead ya está
 guardado y aparece igualmente en el panel de administración.
 
+Anti-abuso: aunque el endpoint es público (lo llama el navegador), descarta
+las peticiones con el campo trampa relleno y solo envía el correo si existe
+una solicitud real reciente con ese teléfono, de modo que no puede usarse
+como pasarela de spam.
+
 ## Puesta en marcha (una sola vez)
 
 1. **Crear una cuenta en [Resend](https://resend.com)** (plan gratuito: 3.000
@@ -20,10 +25,10 @@ guardado y aparece igualmente en el panel de administración.
 4. **Configurar los _secrets_** en Lovable (_Cloud_ → _Settings_ → _Secrets_) o
    en el panel de Supabase (_Edge Functions_ → _Manage secrets_):
 
-   | Secret | Valor | Obligatorio |
-   | --- | --- | --- |
-   | `RESEND_API_KEY` | la API key de Resend | Sí |
-   | `LEAD_NOTIFICATION_TO` | email que recibe los avisos | No (por defecto `axher2204@gmail.com`) |
+   | Secret                   | Valor                                               | Obligatorio                                      |
+   | ------------------------ | --------------------------------------------------- | ------------------------------------------------ |
+   | `RESEND_API_KEY`         | la API key de Resend                                | Sí                                               |
+   | `LEAD_NOTIFICATION_TO`   | email que recibe los avisos                         | No (por defecto `axher2204@gmail.com`)           |
    | `LEAD_NOTIFICATION_FROM` | remitente verificado, p. ej. `AXHER <web@axher.es>` | No (por defecto `AXHER <onboarding@resend.dev>`) |
 
 5. **Desplegar la función.** Lovable la despliega automáticamente al sincronizar

@@ -79,12 +79,29 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "AXHER" },
-      { name: "description", content: "Automatización con IA para empresas de reformas y construcción en España." },
+      {
+        name: "description",
+        content: "Automatización con IA para empresas de reformas y construcción en España.",
+      },
       { name: "author", content: "AXHER" },
       { property: "og:title", content: "AXHER" },
-      { property: "og:description", content: "Automatización con IA para empresas de reformas y construcción en España." },
+      {
+        property: "og:description",
+        content: "Automatización con IA para empresas de reformas y construcción en España.",
+      },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "AXHER" },
+      { property: "og:locale", content: "es_ES" },
+      { property: "og:url", content: "https://axher.es/" },
+      { property: "og:image", content: "https://axher.es/og.png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      {
+        property: "og:image:alt",
+        content: "AXHER — automatización con IA para reformas y construcción",
+      },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://axher.es/og.png" },
     ],
     links: [
       {
@@ -99,7 +116,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
     ],
-
   }),
   shellComponent: RootShell,
   component: RootComponent,

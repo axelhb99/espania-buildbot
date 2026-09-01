@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate, Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -45,20 +45,33 @@ type LeadForm = z.infer<typeof leadSchema>;
 
 const emptyForm: LeadForm = { nombre: "", empresa: "", telefono: "", email: "", descripcion: "" };
 
-
 export function ContactForm() {
   const navigate = useNavigate();
   const [form, setForm] = useState<LeadForm>(emptyForm);
   const [errors, setErrors] = useState<Partial<Record<keyof LeadForm, string>>>({});
   const [sending, setSending] = useState(false);
 
-  const update = (field: keyof LeadForm) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm((f) => ({ ...f, [field]: e.target.value }));
-    setErrors((err) => ({ ...err, [field]: undefined }));
-  };
+  // Anti-spam: campo trampa invisible y momento en que se montó el formulario.
+  const [honeypot, setHoneypot] = useState("");
+  const mountedAt = useRef(Date.now());
+
+  const update =
+    (field: keyof LeadForm) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setForm((f) => ({ ...f, [field]: e.target.value }));
+      setErrors((err) => ({ ...err, [field]: undefined }));
+    };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Bots: rellenan el campo trampa o envían el formulario casi al instante.
+    // Simulamos éxito sin guardar nada para no darles pistas.
+    const looksLikeBot = honeypot.trim() !== "" || Date.now() - mountedAt.current < 1500;
+    if (looksLikeBot) {
+      navigate({ to: "/gracias", search: { nombre: form.nombre, empresa: form.empresa } });
+      return;
+    }
+
     const parsed = leadSchema.safeParse(form);
     if (!parsed.success) {
       const fieldErrors: Partial<Record<keyof LeadForm, string>> = {};
@@ -71,9 +84,7 @@ export function ContactForm() {
     }
     setSending(true);
     const { email, ...rest } = parsed.data;
-    const { error } = await supabase
-      .from("leads")
-      .insert({ ...rest, email: email ? email : null });
+    const { error } = await supabase.from("leads").insert({ ...rest, email: email ? email : null });
 
     setSending(false);
     if (error) {
@@ -84,14 +95,12 @@ export function ContactForm() {
     trackEvent("form_submit");
 
     // Aviso por email al equipo. No bloquea el envío: el lead ya está guardado.
-    void supabase.functions
-      .invoke("notify-lead", { body: parsed.data })
-      .then(
-        ({ error: notifyError }) => {
-          if (notifyError) console.error("notify-lead falló", notifyError);
-        },
-        (err) => console.error("notify-lead falló", err),
-      );
+    void supabase.functions.invoke("notify-lead", { body: { ...parsed.data, honeypot } }).then(
+      ({ error: notifyError }) => {
+        if (notifyError) console.error("notify-lead falló", notifyError);
+      },
+      (err) => console.error("notify-lead falló", err),
+    );
 
     setForm(emptyForm);
     setErrors({});
@@ -102,7 +111,23 @@ export function ContactForm() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="surface-card mx-auto mt-10 max-w-xl space-y-5 p-6 text-left md:p-8">
+    <form
+      onSubmit={onSubmit}
+      className="surface-card mx-auto mt-10 max-w-xl space-y-5 p-6 text-left md:p-8"
+    >
+      {/* Campo trampa anti-spam: invisible y fuera del tabulador para personas. */}
+      <div className="absolute left-[-9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+        <label htmlFor="empresa_web">No rellenar</label>
+        <input
+          id="empresa_web"
+          name="empresa_web"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+        />
+      </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="nombre">Nombre</Label>
@@ -192,17 +217,17 @@ export function ContactForm() {
           id="descripcion"
           value={form.descripcion}
           onChange={update("descripcion")}
-            aria-invalid={!!errors.descripcion}
-            aria-describedby={errors.descripcion ? "descripcion-error" : undefined}
+          aria-invalid={!!errors.descripcion}
+          aria-describedby={errors.descripcion ? "descripcion-error" : undefined}
           placeholder="Qué procesos os quitan más tiempo: presupuestos, seguimiento de obra, atención a clientes…"
           rows={4}
           maxLength={2000}
         />
         {errors.descripcion && (
-            <p id="descripcion-error" role="alert" className="text-xs text-destructive">
-              {errors.descripcion}
-            </p>
-          )}
+          <p id="descripcion-error" role="alert" className="text-xs text-destructive">
+            {errors.descripcion}
+          </p>
+        )}
       </div>
       <Button type="submit" variant="hero" size="xl" className="w-full" disabled={sending}>
         {sending ? <LoaderCircle className="animate-spin" /> : <Send />}
@@ -210,10 +235,7 @@ export function ContactForm() {
       </Button>
       <p className="text-center text-xs text-muted-foreground">
         Al enviar aceptas nuestra{" "}
-        <Link
-          to="/privacidad"
-          className="underline underline-offset-2 hover:text-foreground"
-        >
+        <Link to="/privacidad" className="underline underline-offset-2 hover:text-foreground">
           política de privacidad
         </Link>
         .

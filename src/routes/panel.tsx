@@ -63,8 +63,8 @@ function Panel() {
             <p className="eyebrow">Área privada</p>
             <h1 className="mt-4 text-4xl leading-tight md:text-5xl">Panel de AXHER</h1>
             <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
-              Desde aquí se gestionan las solicitudes que llegan por la web y se consulta cómo
-              está convirtiendo la landing.
+              Desde aquí se gestionan las solicitudes que llegan por la web y se consulta cómo está
+              convirtiendo la landing.
             </p>
 
             <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
@@ -81,7 +81,10 @@ function Panel() {
 
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:gap-8">
               {areas.map(({ icon: Icon, title, text }) => (
-                <article key={title} className="surface-card card-lift flex h-full flex-col p-7 md:p-8">
+                <article
+                  key={title}
+                  className="surface-card card-lift flex h-full flex-col p-7 md:p-8"
+                >
                   <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-primary/12 text-primary">
                     <Icon className="size-6" />
                   </div>

@@ -50,9 +50,7 @@ function Cookies() {
               <Cookie className="size-6 text-primary" aria-hidden="true" />
               <p className="eyebrow">Uso de cookies</p>
             </div>
-            <h1 className="mt-4 text-4xl leading-tight md:text-5xl">
-              Política de Cookies
-            </h1>
+            <h1 className="mt-4 text-4xl leading-tight md:text-5xl">Política de Cookies</h1>
             <p className="mt-5 text-lg text-muted-foreground">
               Te explicamos qué son las cookies, cuáles utilizamos en este sitio y cómo puedes
               gestionarlas.
@@ -83,14 +81,26 @@ function Cookies() {
                     privada.
                   </li>
                   <li>
-                    <strong className="text-foreground">Almacenamiento local:</strong> guardamos
-                    de forma segura el token de autenticación del panel de administración en tu
-                    propio navegador. No contiene datos personales de contacto ni de leads.
+                    <strong className="text-foreground">Almacenamiento local:</strong> guardamos de
+                    forma segura el token de autenticación del panel de administración en tu propio
+                    navegador. No contiene datos personales de contacto ni de leads.
                   </li>
                 </ul>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                   No utilizamos cookies analíticas, de publicidad, de redes sociales ni de terceros
                   con fines de seguimiento comercial.
+                </p>
+              </article>
+
+              <article className="surface-card p-6 md:p-8">
+                <h2 className="text-xl md:text-2xl">Medición de tráfico</h2>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  Contamos de forma agregada cuántas visitas recibe la web, cuántos formularios se
+                  envían y cuántos clics reciben los botones de WhatsApp, para saber si la página
+                  funciona. Esta medición{" "}
+                  <strong className="text-foreground">no usa cookies</strong> ni identificadores
+                  persistentes, no rastrea entre sitios y no permite identificar a ninguna persona:
+                  solo se guarda el tipo de evento, la página y, si existe, la web de procedencia.
                 </p>
               </article>
 
@@ -155,10 +165,7 @@ function Cookies() {
               Automatización con IA para reformas y construcción · España
             </span>
             <nav className="flex items-center gap-3 text-sm text-muted-foreground">
-              <Link
-                to="/privacidad"
-                className="transition-colors hover:text-foreground"
-              >
+              <Link to="/privacidad" className="transition-colors hover:text-foreground">
                 Privacidad
               </Link>
               <span aria-hidden="true">·</span>
@@ -171,9 +178,7 @@ function Cookies() {
               </Link>
             </nav>
           </div>
-          <span className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} AXHER
-          </span>
+          <span className="text-sm text-muted-foreground">© {new Date().getFullYear()} AXHER</span>
         </div>
       </footer>
     </div>

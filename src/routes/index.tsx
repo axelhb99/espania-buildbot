@@ -282,7 +282,10 @@ function Index() {
             </h2>
             <div className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
               {servicios.map(({ icon: Icon, title, text }) => (
-                <article key={title} className="surface-card card-lift flex h-full flex-col p-7 md:p-8">
+                <article
+                  key={title}
+                  className="surface-card card-lift flex h-full flex-col p-7 md:p-8"
+                >
                   <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-primary/12 text-primary">
                     <Icon className="size-6" />
                   </div>
@@ -323,7 +326,9 @@ function Index() {
                   JM
                 </span>
                 <span className="min-w-0 text-sm text-muted-foreground">
-                  <span className="block font-semibold text-foreground">J. M., director técnico</span>
+                  <span className="block font-semibold text-foreground">
+                    J. M., director técnico
+                  </span>
                   Reformas integrales · 24 empleados · Madrid (cliente anónimo por acuerdo de
                   confidencialidad)
                 </span>
@@ -351,7 +356,9 @@ function Index() {
             <div className="mt-12 grid gap-6 md:grid-cols-3 lg:gap-8">
               {pasos.map((p) => (
                 <div key={p.n} className="surface-card card-lift flex h-full flex-col p-7 md:p-8">
-                  <span className="font-display text-5xl font-extrabold text-primary/25">{p.n}</span>
+                  <span className="font-display text-5xl font-extrabold text-primary/25">
+                    {p.n}
+                  </span>
                   <h3 className="mt-3 text-lg">{p.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
                 </div>
@@ -402,7 +409,10 @@ function Index() {
             <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <p className="text-sm text-muted-foreground">
                 ¿Prefieres hablar?{" "}
-                <a href="tel:+34604126759" className="font-semibold text-foreground underline-offset-4 hover:underline">
+                <a
+                  href="tel:+34604126759"
+                  className="font-semibold text-foreground underline-offset-4 hover:underline"
+                >
                   Llámanos al +34 604 126 759
                 </a>
               </p>
@@ -410,6 +420,7 @@ function Index() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent("whatsapp_click")}
                 className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105"
               >
                 <svg className="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -432,6 +443,7 @@ function Index() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent("whatsapp_click")}
             className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#25D366] px-4 text-sm font-semibold text-white"
           >
             <MessageCircle className="size-4" />
@@ -467,9 +479,7 @@ function Index() {
               </Link>
             </nav>
           </div>
-          <span className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} AXHER
-          </span>
+          <span className="text-sm text-muted-foreground">© {new Date().getFullYear()} AXHER</span>
         </div>
       </footer>
     </div>

@@ -50,9 +50,7 @@ function Privacidad() {
               <Shield className="size-6 text-primary" aria-hidden="true" />
               <p className="eyebrow">Protección de datos</p>
             </div>
-            <h1 className="mt-4 text-4xl leading-tight md:text-5xl">
-              Política de Privacidad
-            </h1>
+            <h1 className="mt-4 text-4xl leading-tight md:text-5xl">Política de Privacidad</h1>
             <p className="mt-5 text-lg text-muted-foreground">
               En AXHER tratamos tus datos con responsabilidad. Esta página explica qué información
               recogemos a través del formulario de contacto, con qué finalidad y cuáles son tus
@@ -131,18 +129,38 @@ function Privacidad() {
               <article className="surface-card p-6 md:p-8">
                 <h2 className="text-xl md:text-2xl">Conservación de los datos</h2>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  Conservamos tus datos mientras dure la relación comercial o hasta que nos pidas
-                  su supresión. En cualquier caso, no mantenemos la información más tiempo del
+                  Conservamos tus datos mientras dure la relación comercial o hasta que nos pidas su
+                  supresión. En cualquier caso, no mantenemos la información más tiempo del
                   necesario para cumplir con nuestras obligaciones legales.
                 </p>
               </article>
 
               <article className="surface-card p-6 md:p-8">
-                <h2 className="text-xl md:text-2xl">Destinatarios y transferencias</h2>
+                <h2 className="text-xl md:text-2xl">
+                  Destinatarios y transferencias internacionales
+                </h2>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  No vendemos ni cedemos tus datos personales a terceros. Únicamente los almacenamos
-                  en servidores seguros de nuestro proveedor de alojamiento, con medidas
-                  contractuales que garantizan el cumplimiento del RGPD.
+                  No vendemos ni cedemos tus datos personales a terceros con fines comerciales. Para
+                  prestar el servicio recurrimos a los siguientes encargados del tratamiento:
+                </p>
+                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+                  <li>
+                    <strong className="text-foreground">
+                      Proveedor de alojamiento y base de datos
+                    </strong>
+                    , donde se guardan de forma segura las solicitudes recibidas.
+                  </li>
+                  <li>
+                    <strong className="text-foreground">Resend</strong> (Resend, Inc., EE. UU.), que
+                    usamos únicamente para enviarnos el aviso interno de una nueva solicitud y, si
+                    nos lo has indicado, tu confirmación por email.
+                  </li>
+                </ul>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  El envío de correo a través de Resend supone una transferencia internacional de
+                  datos a Estados Unidos, amparada en las cláusulas contractuales tipo aprobadas por
+                  la Comisión Europea. Todos los encargados tratan los datos siguiendo nuestras
+                  instrucciones y con las garantías que exige el RGPD.
                 </p>
               </article>
 
@@ -215,10 +233,7 @@ function Privacidad() {
               Automatización con IA para reformas y construcción · España
             </span>
             <nav className="flex items-center gap-3 text-sm text-muted-foreground">
-              <Link
-                to="/privacidad"
-                className="transition-colors hover:text-foreground"
-              >
+              <Link to="/privacidad" className="transition-colors hover:text-foreground">
                 Privacidad
               </Link>
               <span aria-hidden="true">·</span>
@@ -231,9 +246,7 @@ function Privacidad() {
               </Link>
             </nav>
           </div>
-          <span className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} AXHER
-          </span>
+          <span className="text-sm text-muted-foreground">© {new Date().getFullYear()} AXHER</span>
         </div>
       </footer>
     </div>
