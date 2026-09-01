@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Send, LoaderCircle } from "lucide-react";
@@ -195,7 +195,14 @@ setForm(emptyForm);
         {sending ? "Enviando…" : "Solicitar auditoría gratuita"}
       </Button>
       <p className="text-center text-xs text-muted-foreground">
-        Al enviar aceptas que tratemos tus datos para responder a tu solicitud.
+        Al enviar aceptas nuestra{" "}
+        <Link
+          to="/privacidad"
+          className="underline underline-offset-2 hover:text-foreground"
+        >
+          política de privacidad
+        </Link>
+        .
       </p>
     </form>
   );

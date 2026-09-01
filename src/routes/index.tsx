@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import logoWhite from "@/assets/axher-logo-white.png.asset.json";
 import { ContactForm } from "@/components/contact-form";
 import { Button } from "@/components/ui/button";
@@ -432,14 +432,31 @@ function Index() {
       </div>
 
       <footer className="border-t border-border py-10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 text-sm text-muted-foreground md:flex-row">
-          <img
-            src={logoWhite.url}
-            alt="Logotipo de AXHER en blanco sobre fondo oscuro"
-            className="h-7 w-auto"
-          />
-          <span>Automatización con IA para reformas y construcción · España</span>
-          <span>© {new Date().getFullYear()} AXHER</span>
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 md:flex-row">
+          <Link to="/">
+            <img
+              src={logoWhite.url}
+              alt="Logotipo de AXHER en blanco sobre fondo oscuro"
+              className="h-7 w-auto"
+            />
+          </Link>
+          <div className="flex flex-col items-center gap-2 md:items-start">
+            <span className="text-sm text-muted-foreground">
+              Automatización con IA para reformas y construcción · España
+            </span>
+            <nav className="flex items-center gap-3 text-sm text-muted-foreground">
+              <Link to="/privacidad" className="transition-colors hover:text-foreground">
+                Privacidad
+              </Link>
+              <span aria-hidden="true">·</span>
+              <Link to="/cookies" className="transition-colors hover:text-foreground">
+                Cookies
+              </Link>
+            </nav>
+          </div>
+          <span className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} AXHER
+          </span>
         </div>
       </footer>
     </div>
