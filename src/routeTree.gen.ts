@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as GraciasRouteImport } from './routes/gracias'
+import { Route as PrivacidadRouteImport } from './routes/privacidad'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,9 +31,19 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GraciasRoute = GraciasRouteImport.update({
   id: '/gracias',
   path: '/gracias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacidadRoute = PrivacidadRouteImport.update({
+  id: '/privacidad',
+  path: '/privacidad',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -43,13 +55,17 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/cookies': typeof CookiesRoute
   '/gracias': typeof GraciasRoute
+  '/privacidad': typeof PrivacidadRoute
   '/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/cookies': typeof CookiesRoute
   '/gracias': typeof GraciasRoute
+  '/privacidad': typeof PrivacidadRoute
   '/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRoutesById {
@@ -57,20 +73,24 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/cookies': typeof CookiesRoute
   '/gracias': typeof GraciasRoute
+  '/privacidad': typeof PrivacidadRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/gracias' | '/admin'
+  fullPaths: '/' | '/auth' | '/cookies' | '/gracias' | '/privacidad' | '/admin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/gracias' | '/admin'
+  to: '/' | '/auth' | '/cookies' | '/gracias' | '/privacidad' | '/admin'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/cookies'
     | '/gracias'
+    | '/privacidad'
     | '/_authenticated/admin'
   fileRoutesById: FileRoutesById
 }
@@ -78,7 +98,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  CookiesRoute: typeof CookiesRoute
   GraciasRoute: typeof GraciasRoute
+  PrivacidadRoute: typeof PrivacidadRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -104,11 +126,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gracias': {
       id: '/gracias'
       path: '/gracias'
       fullPath: '/gracias'
       preLoaderRoute: typeof GraciasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacidad': {
+      id: '/privacidad'
+      path: '/privacidad'
+      fullPath: '/privacidad'
+      preLoaderRoute: typeof PrivacidadRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -136,7 +172,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  CookiesRoute: CookiesRoute,
   GraciasRoute: GraciasRoute,
+  PrivacidadRoute: PrivacidadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
