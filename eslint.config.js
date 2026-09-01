@@ -11,7 +11,6 @@ export default tseslint.config(
       "dist",
       ".output",
       ".vinxi",
-      "supabase/functions",
       // Ficheros generados automáticamente por Lovable ("Do not edit it directly").
       "src/routeTree.gen.ts",
       "src/integrations/supabase/client.ts",

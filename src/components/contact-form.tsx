@@ -93,14 +93,8 @@ export function ContactForm() {
     }
 
     trackEvent("form_submit");
-
-    // Aviso por email al equipo. No bloquea el envío: el lead ya está guardado.
-    void supabase.functions.invoke("notify-lead", { body: { ...parsed.data, honeypot } }).then(
-      ({ error: notifyError }) => {
-        if (notifyError) console.error("notify-lead falló", notifyError);
-      },
-      (err) => console.error("notify-lead falló", err),
-    );
+    // El aviso por email al equipo lo dispara un trigger en la base de datos
+    // (ver supabase/migrations/…_email_por_trigger.sql).
 
     setForm(emptyForm);
     setErrors({});
