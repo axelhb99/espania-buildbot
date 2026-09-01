@@ -1,0 +1,17 @@
+# Normaliza los finales de línea a LF en todo el repositorio.
+# Evita que en Windows (core.autocrlf) el linter marque todos los archivos.
+* text=auto eol=lf
+
+# Lockfile de bun: no normalizar.
+bun.lock -text
+
+# Binarios: nunca aplicar conversión de texto.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.ico  binary
+*.pdf  binary
+*.woff  binary
+*.woff2 binary

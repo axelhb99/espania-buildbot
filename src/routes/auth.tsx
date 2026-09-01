@@ -113,7 +113,6 @@ function AuthPage() {
           </Button>
         </form>
 
-
         <button
           type="button"
           className="w-full text-center text-sm text-muted-foreground underline-offset-4 hover:underline"
