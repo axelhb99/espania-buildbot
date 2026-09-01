@@ -79,7 +79,15 @@ export function ContactForm() {
       toast.error("No se pudo enviar la solicitud. Inténtalo de nuevo o llámanos.");
       return;
     }
-setForm(emptyForm);
+
+    // Aviso por email al equipo. No bloquea el envío: el lead ya está guardado.
+    void supabase.functions
+      .invoke("notify-lead", { body: parsed.data })
+      .then(({ error: notifyError }) => {
+        if (notifyError) console.error("notify-lead falló", notifyError);
+      });
+
+    setForm(emptyForm);
     setErrors({});
     navigate({
       to: "/gracias",
