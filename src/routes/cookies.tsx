@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import logoWhite from "@/assets/axher-logo-white.png.asset.json";
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/logo";
 import { Cookie } from "lucide-react";
 
 export const Route = createFileRoute("/cookies")({
@@ -30,8 +30,12 @@ function Cookies() {
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
-          <Link to="/" className="flex min-w-0 items-center" aria-label="AXHER, inicio">
-            <Logo className="text-[21px]" />
+          <Link to="/" className="flex min-w-0 items-center">
+            <img
+              src={logoWhite.url}
+              alt="Logotipo de AXHER, agencia de automatización con IA"
+              className="h-8 w-auto"
+            />
           </Link>
           <Button variant="outlineLight" size="sm" asChild className="shrink-0">
             <Link to="/">Volver a la web</Link>
@@ -139,8 +143,12 @@ function Cookies() {
 
       <footer className="border-t border-border py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 md:flex-row">
-          <Link to="/" aria-label="AXHER, inicio">
-            <Logo className="text-[19px]" />
+          <Link to="/">
+            <img
+              src={logoWhite.url}
+              alt="Logotipo de AXHER en blanco sobre fondo oscuro"
+              className="h-7 w-auto"
+            />
           </Link>
           <div className="flex flex-col items-center gap-2 md:items-start">
             <span className="text-sm text-muted-foreground">

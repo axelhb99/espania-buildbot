@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import logoWhite from "@/assets/axher-logo-white.png.asset.json";
 import { ContactForm } from "@/components/contact-form";
-import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -160,8 +160,12 @@ function Index() {
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
-          <a href="#top" className="flex min-w-0 items-center" aria-label="AXHER, inicio">
-            <Logo className="text-[21px]" />
+          <a href="#top" className="flex min-w-0 items-center">
+            <img
+              src={logoWhite.url}
+              alt="Logotipo de AXHER, agencia de automatización con IA"
+              className="h-8 w-auto"
+            />
           </a>
           <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
             <a href="#servicios" className="transition-colors hover:text-foreground">
@@ -429,8 +433,12 @@ function Index() {
 
       <footer className="border-t border-border py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 md:flex-row">
-          <Link to="/" aria-label="AXHER, inicio">
-            <Logo className="text-[19px]" />
+          <Link to="/">
+            <img
+              src={logoWhite.url}
+              alt="Logotipo de AXHER en blanco sobre fondo oscuro"
+              className="h-7 w-auto"
+            />
           </Link>
           <div className="flex flex-col items-center gap-2 md:items-start">
             <span className="text-sm text-muted-foreground">
