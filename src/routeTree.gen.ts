@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as GraciasRouteImport } from './routes/gracias'
+import { Route as PanelRouteImport } from './routes/panel'
 import { Route as PrivacidadRouteImport } from './routes/privacidad'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
@@ -41,6 +42,11 @@ const GraciasRoute = GraciasRouteImport.update({
   path: '/gracias',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PanelRoute = PanelRouteImport.update({
+  id: '/panel',
+  path: '/panel',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacidadRoute = PrivacidadRouteImport.update({
   id: '/privacidad',
   path: '/privacidad',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/cookies': typeof CookiesRoute
   '/gracias': typeof GraciasRoute
+  '/panel': typeof PanelRoute
   '/privacidad': typeof PrivacidadRoute
   '/admin': typeof AuthenticatedAdminRoute
 }
@@ -65,6 +72,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/cookies': typeof CookiesRoute
   '/gracias': typeof GraciasRoute
+  '/panel': typeof PanelRoute
   '/privacidad': typeof PrivacidadRoute
   '/admin': typeof AuthenticatedAdminRoute
 }
@@ -75,14 +83,29 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/cookies': typeof CookiesRoute
   '/gracias': typeof GraciasRoute
+  '/panel': typeof PanelRoute
   '/privacidad': typeof PrivacidadRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/cookies' | '/gracias' | '/privacidad' | '/admin'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/cookies'
+    | '/gracias'
+    | '/panel'
+    | '/privacidad'
+    | '/admin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/cookies' | '/gracias' | '/privacidad' | '/admin'
+  to:
+    | '/'
+    | '/auth'
+    | '/cookies'
+    | '/gracias'
+    | '/panel'
+    | '/privacidad'
+    | '/admin'
   id:
     | '__root__'
     | '/'
@@ -90,6 +113,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/cookies'
     | '/gracias'
+    | '/panel'
     | '/privacidad'
     | '/_authenticated/admin'
   fileRoutesById: FileRoutesById
@@ -100,6 +124,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   CookiesRoute: typeof CookiesRoute
   GraciasRoute: typeof GraciasRoute
+  PanelRoute: typeof PanelRoute
   PrivacidadRoute: typeof PrivacidadRoute
 }
 
@@ -140,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GraciasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/panel': {
+      id: '/panel'
+      path: '/panel'
+      fullPath: '/panel'
+      preLoaderRoute: typeof PanelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacidad': {
       id: '/privacidad'
       path: '/privacidad'
@@ -174,6 +206,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   CookiesRoute: CookiesRoute,
   GraciasRoute: GraciasRoute,
+  PanelRoute: PanelRoute,
   PrivacidadRoute: PrivacidadRoute,
 }
 export const routeTree = rootRouteImport
