@@ -1,6 +1,8 @@
+import { useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { z } from "zod";
 import logoWhite from "@/assets/axher-logo-white.png.asset.json";
+import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, MessageCircle, Phone, Mail, ArrowLeft } from "lucide-react";
 
@@ -38,6 +40,13 @@ const WHATSAPP_URL =
 
 function Gracias() {
   const { nombre, empresa } = Route.useSearch();
+
+  const tracked = useRef(false);
+  useEffect(() => {
+    if (tracked.current) return;
+    tracked.current = true;
+    trackEvent("gracias_view");
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">

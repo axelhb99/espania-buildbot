@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      page_events: {
+        Row: {
+          created_at: string
+          event: string
+          id: string
+          path: string | null
+          referrer: string | null
+        }
+        Insert: {
+          created_at?: string
+          event: string
+          id?: string
+          path?: string | null
+          referrer?: string | null
+        }
+        Update: {
+          created_at?: string
+          event?: string
+          id?: string
+          path?: string | null
+          referrer?: string | null
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           created_at: string

@@ -80,6 +80,54 @@ function AdminPage() {
     },
   });
 
+  const funnelQuery = useQuery({
+    queryKey: ["funnel", desde, hasta],
+    enabled: isAdmin,
+    queryFn: async () => {
+      const desdeIso = desde ? new Date(`${desde}T00:00:00`).toISOString() : null;
+      const hastaIso = hasta ? new Date(`${hasta}T23:59:59`).toISOString() : null;
+
+      const inRange = <
+        B extends {
+          gte(col: string, val: string): B;
+          lte(col: string, val: string): B;
+        },
+      >(
+        q: B,
+      ): B => {
+        let out = q;
+        if (desdeIso) out = out.gte("created_at", desdeIso);
+        if (hastaIso) out = out.lte("created_at", hastaIso);
+        return out;
+      };
+
+      const [visitas, gracias, formularios] = await Promise.all([
+        inRange(
+          supabase
+            .from("page_events")
+            .select("*", { count: "exact", head: true })
+            .eq("event", "landing_view"),
+        ),
+        inRange(
+          supabase
+            .from("page_events")
+            .select("*", { count: "exact", head: true })
+            .eq("event", "gracias_view"),
+        ),
+        inRange(supabase.from("leads").select("*", { count: "exact", head: true })),
+      ]);
+
+      const firstError = visitas.error ?? gracias.error ?? formularios.error;
+      if (firstError) throw new Error(firstError.message);
+
+      return {
+        visitas: visitas.count ?? 0,
+        gracias: gracias.count ?? 0,
+        formularios: formularios.count ?? 0,
+      };
+    },
+  });
+
   const claim = useMutation({
     mutationFn: () => claimFirstAdmin(),
     onSuccess: (res) => {
@@ -101,6 +149,7 @@ function AdminPage() {
     onSuccess: () => {
       toast.success("Solicitud eliminada.");
       queryClient.invalidateQueries({ queryKey: ["leads"] });
+      queryClient.invalidateQueries({ queryKey: ["funnel"] });
     },
     onError: () => toast.error("No se pudo eliminar la solicitud."),
   });
@@ -201,6 +250,39 @@ function AdminPage() {
                   Limpiar filtros
                 </Button>
               </div>
+            </section>
+
+            <section>
+              <h2 className="text-sm font-semibold text-foreground">Conversión de la landing</h2>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Medición anónima y sin cookies. Se aplica el rango de fechas de los filtros.
+              </p>
+              <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {[
+                  { label: "Visitas a la landing", value: funnelQuery.data?.visitas ?? 0 },
+                  { label: "Formularios enviados", value: funnelQuery.data?.formularios ?? 0 },
+                  { label: "Llegadas a /gracias", value: funnelQuery.data?.gracias ?? 0 },
+                  {
+                    label: "Tasa de conversión",
+                    value:
+                      funnelQuery.data && funnelQuery.data.visitas > 0
+                        ? `${((funnelQuery.data.formularios / funnelQuery.data.visitas) * 100).toFixed(1)}%`
+                        : "—",
+                  },
+                ].map((tile) => (
+                  <div key={tile.label} className="surface-card p-5">
+                    <p className="text-sm text-muted-foreground">{tile.label}</p>
+                    <p className="mt-1 text-2xl font-bold text-foreground">
+                      {funnelQuery.isLoading ? "…" : tile.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              {funnelQuery.isError && (
+                <p className="mt-2 text-sm text-destructive" role="alert">
+                  No se pudieron cargar las métricas de conversión.
+                </p>
+              )}
             </section>
 
             <p className="text-sm text-muted-foreground">

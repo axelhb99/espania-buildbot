@@ -4,6 +4,7 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { Send, LoaderCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -80,12 +81,17 @@ export function ContactForm() {
       return;
     }
 
+    trackEvent("form_submit");
+
     // Aviso por email al equipo. No bloquea el envío: el lead ya está guardado.
     void supabase.functions
       .invoke("notify-lead", { body: parsed.data })
-      .then(({ error: notifyError }) => {
-        if (notifyError) console.error("notify-lead falló", notifyError);
-      });
+      .then(
+        ({ error: notifyError }) => {
+          if (notifyError) console.error("notify-lead falló", notifyError);
+        },
+        (err) => console.error("notify-lead falló", err),
+      );
 
     setForm(emptyForm);
     setErrors({});

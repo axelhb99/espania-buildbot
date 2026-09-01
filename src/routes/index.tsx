@@ -1,5 +1,7 @@
+import { useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import logoWhite from "@/assets/axher-logo-white.png.asset.json";
+import { trackEvent } from "@/lib/analytics";
 import { ContactForm } from "@/components/contact-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -156,6 +158,13 @@ const faqs = [
 ];
 
 function Index() {
+  const tracked = useRef(false);
+  useEffect(() => {
+    if (tracked.current) return;
+    tracked.current = true;
+    trackEvent("landing_view");
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur">
