@@ -1,15 +1,22 @@
--- El formulario público de la web escribe en `leads` como rol `anon`.
--- Restauramos esa política (por si una revisión posterior la eliminó o
--- endureció) con validaciones de longitud que reflejan las del propio esquema.
+-- El formulario público escribe en `leads` como rol `anon` (sin leer de vuelta).
+-- Dejamos una única política de INSERT permisiva y limpia para anon; las
+-- validaciones de longitud ya las impone el CHECK de las columnas.
+--
+-- (Se dejan sin tocar las políticas de SELECT/UPDATE/DELETE de administradores.)
+
+DO $$
+DECLARE p record;
+BEGIN
+  FOR p IN
+    SELECT policyname FROM pg_policies
+    WHERE schemaname = 'public' AND tablename = 'leads' AND cmd = 'INSERT'
+  LOOP
+    EXECUTE format('DROP POLICY %I ON public.leads', p.policyname);
+  END LOOP;
+END $$;
 
 GRANT INSERT ON public.leads TO anon;
 
-DROP POLICY IF EXISTS "Cualquiera puede enviar una solicitud" ON public.leads;
-CREATE POLICY "Cualquiera puede enviar una solicitud"
-ON public.leads FOR INSERT TO anon
-WITH CHECK (
-  char_length(nombre) BETWEEN 2 AND 100
-  AND char_length(empresa) BETWEEN 2 AND 150
-  AND char_length(telefono) BETWEEN 6 AND 20
-  AND char_length(descripcion) BETWEEN 10 AND 2000
-);
+CREATE POLICY leads_insert_anon
+ON public.leads AS PERMISSIVE FOR INSERT TO anon
+WITH CHECK (true);
