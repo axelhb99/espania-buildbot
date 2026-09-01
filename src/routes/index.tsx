@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import logoWhite from "@/assets/axher-logo-white.png.asset.json";
 import { ContactForm } from "@/components/contact-form";
 import { Button } from "@/components/ui/button";
