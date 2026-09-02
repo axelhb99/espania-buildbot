@@ -150,10 +150,6 @@ const faqs = [
     q: "¿Qué pasa con la protección de datos?",
     a: "Trabajamos con proveedores con servidores en la UE, contrato de encargado de tratamiento y RGPD. Vuestros datos no se usan para entrenar modelos.",
   },
-  {
-    q: "¿Cuánto cuesta?",
-    a: "Auditoría inicial desde 900 €, deducible si continuáis. Los proyectos de implantación parten de 2.500 € más una cuota mensual de mantenimiento según el número de automatizaciones.",
-  },
 ];
 
 function Index() {
