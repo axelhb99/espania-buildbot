@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#1b2c4b" />
+  <g stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.55">
+    <line x1="24" y1="13" x2="45" y2="19" />
+    <line x1="45" y1="19" x2="52" y2="33" />
+    <line x1="52" y1="33" x2="44" y2="46" />
+    <line x1="45" y1="19" x2="44" y2="46" />
+  </g>
+  <g fill="#ffffff">
+    <circle cx="45" cy="19" r="3" />
+    <circle cx="52" cy="33" r="2.6" opacity="0.45" />
+    <circle cx="44" cy="46" r="3" />
+  </g>
+  <path
+    d="M24 11 L39 53 L31 53 L27.5 42 L20.5 42 L17 53 L9 53 Z M24 26 L27 37 L21 37 Z"
+    fill="#ffffff"
+    fill-rule="evenodd"
+  />
+</svg>

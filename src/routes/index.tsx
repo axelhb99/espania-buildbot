@@ -43,8 +43,10 @@ export const Route = createFileRoute("/")({
           "Automatizamos presupuestos, llamadas y seguimiento de obra para constructoras y empresas de reformas en España.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://axher.es/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://axher.es/" }],
   }),
   component: Index,
 });
@@ -194,13 +196,16 @@ function Index() {
       <main id="top" className="pb-20 md:pb-0">
         {/* HERO */}
         <section className="relative isolate overflow-hidden">
-          <img
-            src={heroObra}
-            alt="Jefe de obra revisando en una tablet el avance de una reforma en España"
-            width={1600}
-            height={1104}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
+          <picture>
+            <source srcSet="/hero-obra.webp" type="image/webp" />
+            <img
+              src={heroObra}
+              alt="Jefe de obra revisando en una tablet el avance de una reforma en España"
+              width={1600}
+              height={1104}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </picture>
           <div
             className="absolute inset-0"
             style={{ backgroundImage: "var(--gradient-hero)" }}

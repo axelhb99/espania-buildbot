@@ -20,6 +20,7 @@ export const Route = createFileRoute("/privacidad")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://axher.es/privacidad" }],
   }),
   component: Privacidad,
 });

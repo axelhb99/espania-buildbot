@@ -46,6 +46,13 @@ function isH3SwallowedErrorBody(body: string): boolean {
 
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
+    // Canonicaliza el dominio: www.axher.es -> axher.es (301).
+    const url = new URL(request.url);
+    if (url.hostname === "www.axher.es") {
+      url.hostname = "axher.es";
+      return Response.redirect(url.toString(), 301);
+    }
+
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
