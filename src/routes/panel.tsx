@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Inbox, BarChart3, ShieldCheck } from "lucide-react";
-import logoWhite from "@/assets/axher-logo-white.png.asset.json";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/panel")({
@@ -46,7 +45,7 @@ function Panel() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
           <Link to="/" className="flex min-w-0 items-center">
             <img
-              src={logoWhite.url}
+              src="/axher-logo-white.png"
               alt="Logotipo de AXHER, agencia de automatización con IA"
               className="h-8 w-auto"
             />
@@ -101,7 +100,7 @@ function Panel() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 md:flex-row">
           <Link to="/">
             <img
-              src={logoWhite.url}
+              src="/axher-logo-white.png"
               alt="Logotipo de AXHER en blanco sobre fondo oscuro"
               className="h-7 w-auto"
             />

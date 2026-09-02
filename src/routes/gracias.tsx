@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { z } from "zod";
-import logoWhite from "@/assets/axher-logo-white.png.asset.json";
 import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, MessageCircle, Phone, Mail, ArrowLeft } from "lucide-react";
@@ -54,7 +53,7 @@ function Gracias() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
           <Link to="/" className="flex min-w-0 items-center">
             <img
-              src={logoWhite.url}
+              src="/axher-logo-white.png"
               alt="Logotipo de AXHER, agencia de automatización con IA"
               className="h-8 w-auto"
             />
@@ -150,7 +149,7 @@ function Gracias() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 md:flex-row">
           <Link to="/">
             <img
-              src={logoWhite.url}
+              src="/axher-logo-white.png"
               alt="Logotipo de AXHER en blanco sobre fondo oscuro"
               className="h-7 w-auto"
             />
