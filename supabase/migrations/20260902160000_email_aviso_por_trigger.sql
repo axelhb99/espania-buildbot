@@ -23,7 +23,7 @@ set search_path = public
 as $$
 declare
   api_key text;
-  remitente text := 'AXHER <onboarding@resend.dev>';
+  remitente text := 'AXHER <hola@axher.es>';
   destinatario text := 'axher2204@gmail.com';
   cuerpo jsonb;
 begin
