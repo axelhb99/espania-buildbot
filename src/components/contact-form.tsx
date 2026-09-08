@@ -223,7 +223,13 @@ export function ContactForm() {
           </p>
         )}
       </div>
-      <Button type="submit" variant="hero" size="xl" className="w-full" disabled={sending}>
+      <Button
+        type="submit"
+        variant="hero"
+        size="xl"
+        className="h-auto min-h-13 w-full whitespace-normal py-3 leading-snug"
+        disabled={sending}
+      >
         {sending ? <LoaderCircle className="animate-spin" /> : <Send />}
         {sending ? "Enviando…" : "Solicitar auditoría gratuita"}
       </Button>

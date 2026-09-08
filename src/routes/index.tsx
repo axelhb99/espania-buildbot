@@ -163,7 +163,7 @@ function Index() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
           <a href="#top" className="flex min-w-0 items-center">
@@ -193,7 +193,7 @@ function Index() {
         </div>
       </header>
 
-      <main id="top" className="pb-20 md:pb-0">
+      <main id="top">
         {/* HERO */}
         <section className="relative isolate overflow-hidden">
           <picture>
@@ -223,13 +223,13 @@ function Index() {
               construcción: presupuestos, llamadas, seguimiento de obra y control de costes sin
               contratar más administrativos.
             </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Button variant="hero" size="xl" asChild>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Button variant="hero" size="xl" asChild className="w-full sm:w-auto">
                 <a href="#contacto">
                   Pedir auditoría gratuita <ArrowRight />
                 </a>
               </Button>
-              <Button variant="outlineLight" size="xl" asChild>
+              <Button variant="outlineLight" size="xl" asChild className="w-full sm:w-auto">
                 <a href="#servicios">Ver qué automatizamos</a>
               </Button>
             </div>

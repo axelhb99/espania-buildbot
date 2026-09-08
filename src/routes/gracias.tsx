@@ -98,13 +98,18 @@ function Gracias() {
               ))}
             </div>
 
-            <div className="surface-card mx-auto mt-12 p-8 text-left md:p-10">
+            <div className="surface-card mx-auto mt-12 p-6 text-left md:p-10">
               <h2 className="text-xl md:text-2xl">¿Prefieres adelantar algo o hablar ya?</h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 Escríbenos por WhatsApp, llámanos o mándanos un correo: te respondemos rápido.
               </p>
               <div className="mt-6 grid gap-3">
-                <Button variant="hero" size="lg" asChild className="w-full">
+                <Button
+                  variant="hero"
+                  size="lg"
+                  asChild
+                  className="h-auto min-h-11 w-full whitespace-normal py-2.5 leading-snug"
+                >
                   <a
                     href={WHATSAPP_URL}
                     target="_blank"

@@ -124,6 +124,12 @@
     border-color: var(--color-border);
   }
 
+  html {
+    /* Evita el scroll horizontal por desbordes puntuales en móviles estrechos.
+       `clip` no rompe position: sticky como haría `hidden`. */
+    overflow-x: clip;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
