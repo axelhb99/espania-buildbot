@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import Lenis from "lenis";
 import { Toaster } from "@/components/ui/sonner";
 
 import appCss from "../styles.css?url";
@@ -166,6 +167,15 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    // Scroll suave con la rueda del ratón. Se desactiva si el usuario ha pedido
+    // menos movimiento. En táctil no se toca el scroll nativo (syncTouch: false).
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const lenis = new Lenis({ autoRaf: true, anchors: true });
+    return () => lenis.destroy();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
