@@ -268,7 +268,12 @@ function AdminPage() {
       const { error } = await supabase.from("leads").update({ estado }).eq("id", id);
       if (error) throw new Error(error.message);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["leads"] }),
+    onSuccess: (_d, vars) => {
+      queryClient.invalidateQueries({ queryKey: ["leads"] });
+      queryClient.invalidateQueries({ queryKey: ["lead-historial", vars.id] });
+      toast.success(`Estado actualizado a "${estadoLabel(vars.estado)}".`);
+    },
+
     onError: () => toast.error("No se pudo cambiar el estado."),
   });
 
