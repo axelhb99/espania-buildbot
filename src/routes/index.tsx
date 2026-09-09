@@ -30,23 +30,48 @@ import heroObra from "@/assets/hero-obra.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AXHER | Automatización con IA para reformas y construcción" },
+      { title: "AXHER | Automatización IA para reformas y construcción" },
       {
         name: "description",
         content:
-          "Agencia de automatización con IA para empresas de reformas y construcción en España: presupuestos automáticos, captación de leads y seguimiento de obra 24/7.",
+          "Automatización con IA para empresas de reformas y constructoras en España. Presupuestos el mismo día, atención de llamadas y seguimiento de obra en Madrid, Barcelona y Valencia.",
       },
-      { property: "og:title", content: "AXHER | Automatización con IA para reformas" },
+      { property: "og:title", content: "AXHER | Automatización IA para reformas y construcción" },
       {
         property: "og:description",
         content:
-          "Automatizamos presupuestos, llamadas y seguimiento de obra para constructoras y empresas de reformas en España.",
+          "Automatizamos presupuestos, llamadas y seguimiento de obra para empresas de reformas y constructoras en España: Madrid, Barcelona, Valencia y Bilbao.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://axher.es/" },
+      { property: "og:image", content: "https://axher.es/og.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://axher.es/og.png" },
     ],
     links: [{ rel: "canonical", href: "https://axher.es/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          name: "AXHER",
+          url: "https://axher.es/",
+          image: "https://axher.es/og.png",
+          email: "axher2204@gmail.com",
+          telephone: "+34604126759",
+          description:
+            "Agencia de automatización con IA para empresas de reformas y construcción en España.",
+          areaServed: [
+            { "@type": "Country", name: "España" },
+            { "@type": "City", name: "Madrid" },
+            { "@type": "City", name: "Barcelona" },
+            { "@type": "City", name: "Valencia" },
+            { "@type": "City", name: "Bilbao" },
+          ],
+        }),
+      },
+    ],
   }),
   component: Index,
 });
@@ -278,7 +303,7 @@ function Index() {
           <div className="reveal mx-auto max-w-6xl px-5 py-20 md:py-28">
             <p className="eyebrow">Servicios</p>
             <h2 className="mt-4 max-w-2xl text-3xl md:text-4xl">
-              Automatizaciones diseñadas para el día a día de una obra
+              Automatizaciones para empresas de reformas y construcción en España
             </h2>
             <div className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
               {servicios.map(({ icon: Icon, title, text }) => (
@@ -300,7 +325,11 @@ function Index() {
         {/* RESULTADOS */}
         <section id="resultados" className="section-base">
           <div className="reveal mx-auto max-w-6xl px-5 py-20 md:py-28">
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <p className="eyebrow">Resultados</p>
+            <h2 className="mt-4 max-w-2xl text-3xl md:text-4xl">
+              Lo que consiguen constructoras y reformistas con AXHER
+            </h2>
+            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {metricas.map((m) => (
                 <div key={m.label} className="border-t-2 border-primary pt-5">
                   <p className="font-display text-5xl font-extrabold leading-none tracking-tight text-foreground md:text-6xl">
