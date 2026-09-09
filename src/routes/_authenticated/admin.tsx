@@ -83,13 +83,7 @@ const ESTADO_CLASE: Record<string, string> = {
 
 const estadoLabel = (v: string) => ESTADOS.find((e) => e.value === v)?.label ?? v;
 
-function HistorialLead({
-  leadId,
-  formatter,
-}: {
-  leadId: string;
-  formatter: Intl.DateTimeFormat;
-}) {
+function HistorialLead({ leadId, formatter }: { leadId: string; formatter: Intl.DateTimeFormat }) {
   const historial = useQuery({
     queryKey: ["lead-historial", leadId],
     queryFn: async () => {
@@ -120,9 +114,7 @@ function HistorialLead({
         <li key={h.id} className="flex items-center gap-3">
           <span className="size-1.5 rounded-full bg-primary" aria-hidden="true" />
           <span className="font-medium text-foreground">{estadoLabel(h.estado)}</span>
-          <span className="text-muted-foreground">
-            {formatter.format(new Date(h.created_at))}
-          </span>
+          <span className="text-muted-foreground">{formatter.format(new Date(h.created_at))}</span>
         </li>
       ))}
       {historial.data?.length === 0 && (
@@ -139,8 +131,6 @@ function AdminPage() {
   const [desde, setDesde] = useState("");
   const [hasta, setHasta] = useState("");
   const [expandido, setExpandido] = useState<string | null>(null);
-
-
 
   const rolesQuery = useQuery({
     queryKey: ["my-roles"],

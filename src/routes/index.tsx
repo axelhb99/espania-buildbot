@@ -228,7 +228,7 @@ function Index() {
               alt="Equipo de construcción revisando los planos de una obra en España"
               width={1280}
               height={854}
-              className="absolute inset-0 h-full w-full object-cover brightness-[0.62] contrast-[1.08] grayscale-[0.55]"
+              className="absolute inset-0 h-full w-full object-cover object-[50%_35%] brightness-[0.62] contrast-[1.08] grayscale-[0.55]"
             />
           </picture>
           {/* Tinte azul marino: unifica cualquier foto con la paleta del sitio */}
