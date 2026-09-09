@@ -246,7 +246,7 @@ function Index() {
 
         {/* DOLOR */}
         <section className="section-base">
-          <div className="mx-auto max-w-6xl px-5 py-20 md:py-24">
+          <div className="reveal mx-auto max-w-6xl px-5 py-20 md:py-24">
             <div className="grid gap-10 md:grid-cols-[1fr_1.1fr] md:items-center">
               <div>
                 <p className="eyebrow">El problema</p>
@@ -275,7 +275,7 @@ function Index() {
 
         {/* SERVICIOS */}
         <section id="servicios" className="section-alt border-y border-border">
-          <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
+          <div className="reveal mx-auto max-w-6xl px-5 py-20 md:py-28">
             <p className="eyebrow">Servicios</p>
             <h2 className="mt-4 max-w-2xl text-3xl md:text-4xl">
               Automatizaciones diseñadas para el día a día de una obra
@@ -299,7 +299,7 @@ function Index() {
 
         {/* RESULTADOS */}
         <section id="resultados" className="section-base">
-          <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
+          <div className="reveal mx-auto max-w-6xl px-5 py-20 md:py-28">
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {metricas.map((m) => (
                 <div key={m.label} className="border-t-2 border-primary pt-5">
@@ -350,7 +350,7 @@ function Index() {
 
         {/* PROCESO */}
         <section id="proceso" className="section-alt border-y border-border">
-          <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
+          <div className="reveal mx-auto max-w-6xl px-5 py-20 md:py-28">
             <p className="eyebrow">Cómo trabajamos</p>
             <h2 className="mt-4 text-3xl md:text-4xl">Del caos al sistema en tres fases</h2>
             <div className="mt-12 grid gap-6 md:grid-cols-3 lg:gap-8">
@@ -369,7 +369,7 @@ function Index() {
 
         {/* FAQ */}
         <section id="faq" className="section-base">
-          <div className="mx-auto max-w-3xl px-5 py-20 md:py-28">
+          <div className="reveal mx-auto max-w-3xl px-5 py-20 md:py-28">
             <p className="eyebrow">Preguntas frecuentes</p>
             <h2 className="mt-4 text-3xl md:text-4xl">Lo que suelen preguntarnos</h2>
             <Accordion type="single" collapsible className="mt-8">
@@ -385,7 +385,7 @@ function Index() {
 
         {/* CTA */}
         <section id="contacto" className="section-alt border-t border-border">
-          <div className="mx-auto max-w-3xl px-5 py-20 text-center md:py-28">
+          <div className="reveal mx-auto max-w-3xl px-5 py-20 text-center md:py-28">
             <h2 className="text-3xl md:text-4xl">
               Auditoría gratuita de <span className="text-hero-gradient">30 minutos</span>
             </h2>
