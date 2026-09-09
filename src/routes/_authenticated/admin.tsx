@@ -69,12 +69,78 @@ function toCsv(rows: Lead[], formatter: Intl.DateTimeFormat): string {
   return [header.map(cell).join(","), ...lines].join("\r\n");
 }
 
+const ESTADOS = [
+  { value: "recibida", label: "Recibida" },
+  { value: "contactada", label: "Contactada" },
+  { value: "cerrada", label: "Cerrada" },
+] as const;
+
+const ESTADO_CLASE: Record<string, string> = {
+  recibida: "bg-muted text-muted-foreground",
+  contactada: "bg-primary/15 text-primary",
+  cerrada: "bg-emerald-500/15 text-emerald-400",
+};
+
+const estadoLabel = (v: string) => ESTADOS.find((e) => e.value === v)?.label ?? v;
+
+function HistorialLead({
+  leadId,
+  formatter,
+}: {
+  leadId: string;
+  formatter: Intl.DateTimeFormat;
+}) {
+  const historial = useQuery({
+    queryKey: ["lead-historial", leadId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("lead_status_history")
+        .select("id, estado, created_at")
+        .eq("lead_id", leadId)
+        .order("created_at", { ascending: true });
+      if (error) throw new Error(error.message);
+      return data ?? [];
+    },
+  });
+
+  if (historial.isLoading) {
+    return <p className="py-2 text-sm text-muted-foreground">Cargando historial…</p>;
+  }
+  if (historial.isError) {
+    return (
+      <p className="py-2 text-sm text-destructive" role="alert">
+        No se pudo cargar el historial.
+      </p>
+    );
+  }
+
+  return (
+    <ol className="space-y-2 py-2 text-sm">
+      {historial.data?.map((h) => (
+        <li key={h.id} className="flex items-center gap-3">
+          <span className="size-1.5 rounded-full bg-primary" aria-hidden="true" />
+          <span className="font-medium text-foreground">{estadoLabel(h.estado)}</span>
+          <span className="text-muted-foreground">
+            {formatter.format(new Date(h.created_at))}
+          </span>
+        </li>
+      ))}
+      {historial.data?.length === 0 && (
+        <li className="text-muted-foreground">Sin movimientos registrados.</li>
+      )}
+    </ol>
+  );
+}
+
 function AdminPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [empresa, setEmpresa] = useState("");
   const [desde, setDesde] = useState("");
   const [hasta, setHasta] = useState("");
+  const [expandido, setExpandido] = useState<string | null>(null);
+
+
 
   const rolesQuery = useQuery({
     queryKey: ["my-roles"],
