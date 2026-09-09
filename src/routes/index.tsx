@@ -241,7 +241,7 @@ function Index() {
           />
           <div className="relative mx-auto max-w-6xl px-5 py-24 md:py-40">
             <p className="eyebrow">Automatización con IA · España</p>
-            <h1 className="mt-5 max-w-3xl text-4xl leading-[1.05] md:text-6xl">
+            <h1 className="mt-5 max-w-3xl text-4xl leading-[1.1] lg:max-w-none lg:text-5xl lg:leading-[1.08] xl:text-[3.5rem]">
               Vuestro equipo está en la obra.
               <br />
               <span className="text-hero-gradient">La oficina que la gestione sola.</span>
