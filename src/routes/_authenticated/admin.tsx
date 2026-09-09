@@ -400,63 +400,79 @@ function AdminPage() {
                 </TableHeader>
                 <TableBody>
                   {(leadsQuery.data ?? []).map((lead) => {
-                    const atendido = lead.estado === "atendido";
+                    const abierto = expandido === lead.id;
                     return (
-                      <TableRow key={lead.id}>
-                        <TableCell className="whitespace-nowrap text-muted-foreground">
-                          {formatter.format(new Date(lead.created_at))}
-                        </TableCell>
-                        <TableCell>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setEstado.mutate({
-                                id: lead.id,
-                                estado: atendido ? "pendiente" : "atendido",
-                              })
-                            }
-                            disabled={setEstado.isPending}
-                            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors ${
-                              atendido
-                                ? "bg-primary/15 text-primary hover:bg-primary/25"
-                                : "bg-muted text-muted-foreground hover:bg-muted/70"
-                            }`}
-                            title="Cambiar estado"
-                          >
-                            {atendido ? "Atendido" : "Pendiente"}
-                          </button>
-                        </TableCell>
-                        <TableCell className="font-medium">{lead.nombre}</TableCell>
-                        <TableCell>{lead.empresa}</TableCell>
-                        <TableCell className="space-y-1">
-                          <a className="block hover:underline" href={`tel:${lead.telefono}`}>
-                            {lead.telefono}
-                          </a>
-                          {lead.email && (
-                            <a
-                              className="block text-muted-foreground hover:underline"
-                              href={`mailto:${lead.email}`}
+                      <Fragment key={lead.id}>
+                        <TableRow>
+                          <TableCell className="whitespace-nowrap text-muted-foreground">
+                            {formatter.format(new Date(lead.created_at))}
+                          </TableCell>
+                          <TableCell>
+                            <select
+                              aria-label={`Estado de la solicitud de ${lead.nombre}`}
+                              value={lead.estado}
+                              disabled={setEstado.isPending}
+                              onChange={(e) =>
+                                setEstado.mutate({ id: lead.id, estado: e.target.value })
+                              }
+                              className={`rounded-full border border-border px-2.5 py-1 text-xs font-medium ${ESTADO_CLASE[lead.estado] ?? "bg-muted text-muted-foreground"}`}
                             >
-                              {lead.email}
+                              {ESTADOS.map((e) => (
+                                <option key={e.value} value={e.value}>
+                                  {e.label}
+                                </option>
+                              ))}
+                            </select>
+                          </TableCell>
+                          <TableCell className="font-medium">{lead.nombre}</TableCell>
+                          <TableCell>{lead.empresa}</TableCell>
+                          <TableCell className="space-y-1">
+                            <a className="block hover:underline" href={`tel:${lead.telefono}`}>
+                              {lead.telefono}
                             </a>
-                          )}
-                        </TableCell>
-                        <TableCell className="max-w-md whitespace-pre-wrap text-muted-foreground">
-                          {lead.descripcion}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => remove.mutate(lead.id)}
-                            disabled={remove.isPending}
-                          >
-                            Eliminar
-                          </Button>
-                        </TableCell>
-                      </TableRow>
+                            {lead.email && (
+                              <a
+                                className="block text-muted-foreground hover:underline"
+                                href={`mailto:${lead.email}`}
+                              >
+                                {lead.email}
+                              </a>
+                            )}
+                          </TableCell>
+                          <TableCell className="max-w-md whitespace-pre-wrap text-muted-foreground">
+                            {lead.descripcion}
+                          </TableCell>
+                          <TableCell className="space-x-1 text-right whitespace-nowrap">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              aria-expanded={abierto}
+                              onClick={() => setExpandido(abierto ? null : lead.id)}
+                            >
+                              <History className="size-4" />
+                              Historial
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => remove.mutate(lead.id)}
+                              disabled={remove.isPending}
+                            >
+                              Eliminar
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                        {abierto && (
+                          <TableRow>
+                            <TableCell colSpan={7} className="bg-muted/30">
+                              <HistorialLead leadId={lead.id} formatter={formatter} />
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </Fragment>
                     );
                   })}
+
                   {!leadsQuery.isLoading && total === 0 && (
                     <TableRow>
                       <TableCell colSpan={7} className="py-10 text-center text-muted-foreground">
