@@ -146,12 +146,11 @@ function AdminPage() {
       const ownHost =
         typeof window !== "undefined" ? window.location.hostname.replace(/^www\./, "") : "";
       const sources = new Map<string, number>();
-      for (const row of referrers.data ?? []) {
+      for (const { referrer } of referrers.data ?? []) {
         let key = "Directo";
-        const ref = (row as { referrer: string | null }).referrer;
-        if (ref) {
+        if (referrer) {
           try {
-            const host = new URL(ref).hostname.replace(/^www\./, "");
+            const host = new URL(referrer).hostname.replace(/^www\./, "");
             key = host && host !== ownHost ? host : "Directo";
           } catch {
             /* referrer no válido: se cuenta como Directo */
