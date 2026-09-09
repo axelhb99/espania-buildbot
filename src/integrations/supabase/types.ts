@@ -14,6 +14,38 @@ export type Database = {
   }
   public: {
     Tables: {
+      lead_status_history: {
+        Row: {
+          changed_by: string | null
+          created_at: string
+          estado: string
+          id: string
+          lead_id: string
+        }
+        Insert: {
+          changed_by?: string | null
+          created_at?: string
+          estado: string
+          id?: string
+          lead_id: string
+        }
+        Update: {
+          changed_by?: string | null
+          created_at?: string
+          estado?: string
+          id?: string
+          lead_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_status_history_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leads: {
         Row: {
           created_at: string
