@@ -225,12 +225,15 @@ function Index() {
             <source srcSet="/hero-obra.webp" type="image/webp" />
             <img
               src={heroObra}
-              alt="Jefe de obra revisando en una tablet el avance de una reforma en España"
-              width={1600}
-              height={1104}
-              className="absolute inset-0 h-full w-full object-cover"
+              alt="Equipo de construcción revisando los planos de una obra en España"
+              width={1280}
+              height={854}
+              className="absolute inset-0 h-full w-full object-cover brightness-[0.62] contrast-[1.08] grayscale-[0.55]"
             />
           </picture>
+          {/* Tinte azul marino: unifica cualquier foto con la paleta del sitio */}
+          <div className="absolute inset-0 mix-blend-color bg-primary/35" aria-hidden="true" />
+          <div className="absolute inset-0 bg-background/40" aria-hidden="true" />
           <div
             className="absolute inset-0"
             style={{ backgroundImage: "var(--gradient-hero)" }}
