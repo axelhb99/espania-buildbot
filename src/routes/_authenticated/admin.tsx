@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { LoaderCircle, ShieldCheck, Download } from "lucide-react";
+import { LoaderCircle, ShieldCheck, Download, History } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { claimFirstAdmin, getMyRoles } from "@/lib/admin.functions";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -68,12 +69,78 @@ function toCsv(rows: Lead[], formatter: Intl.DateTimeFormat): string {
   return [header.map(cell).join(","), ...lines].join("\r\n");
 }
 
+const ESTADOS = [
+  { value: "recibida", label: "Recibida" },
+  { value: "contactada", label: "Contactada" },
+  { value: "cerrada", label: "Cerrada" },
+] as const;
+
+const ESTADO_CLASE: Record<string, string> = {
+  recibida: "bg-muted text-muted-foreground",
+  contactada: "bg-primary/15 text-primary",
+  cerrada: "bg-emerald-500/15 text-emerald-400",
+};
+
+const estadoLabel = (v: string) => ESTADOS.find((e) => e.value === v)?.label ?? v;
+
+function HistorialLead({
+  leadId,
+  formatter,
+}: {
+  leadId: string;
+  formatter: Intl.DateTimeFormat;
+}) {
+  const historial = useQuery({
+    queryKey: ["lead-historial", leadId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("lead_status_history")
+        .select("id, estado, created_at")
+        .eq("lead_id", leadId)
+        .order("created_at", { ascending: true });
+      if (error) throw new Error(error.message);
+      return data ?? [];
+    },
+  });
+
+  if (historial.isLoading) {
+    return <p className="py-2 text-sm text-muted-foreground">Cargando historial…</p>;
+  }
+  if (historial.isError) {
+    return (
+      <p className="py-2 text-sm text-destructive" role="alert">
+        No se pudo cargar el historial.
+      </p>
+    );
+  }
+
+  return (
+    <ol className="space-y-2 py-2 text-sm">
+      {historial.data?.map((h) => (
+        <li key={h.id} className="flex items-center gap-3">
+          <span className="size-1.5 rounded-full bg-primary" aria-hidden="true" />
+          <span className="font-medium text-foreground">{estadoLabel(h.estado)}</span>
+          <span className="text-muted-foreground">
+            {formatter.format(new Date(h.created_at))}
+          </span>
+        </li>
+      ))}
+      {historial.data?.length === 0 && (
+        <li className="text-muted-foreground">Sin movimientos registrados.</li>
+      )}
+    </ol>
+  );
+}
+
 function AdminPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [empresa, setEmpresa] = useState("");
   const [desde, setDesde] = useState("");
   const [hasta, setHasta] = useState("");
+  const [expandido, setExpandido] = useState<string | null>(null);
+
+
 
   const rolesQuery = useQuery({
     queryKey: ["my-roles"],
@@ -201,7 +268,12 @@ function AdminPage() {
       const { error } = await supabase.from("leads").update({ estado }).eq("id", id);
       if (error) throw new Error(error.message);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["leads"] }),
+    onSuccess: (_d, vars) => {
+      queryClient.invalidateQueries({ queryKey: ["leads"] });
+      queryClient.invalidateQueries({ queryKey: ["lead-historial", vars.id] });
+      toast.success(`Estado actualizado a "${estadoLabel(vars.estado)}".`);
+    },
+
     onError: () => toast.error("No se pudo cambiar el estado."),
   });
 
@@ -400,63 +472,79 @@ function AdminPage() {
                 </TableHeader>
                 <TableBody>
                   {(leadsQuery.data ?? []).map((lead) => {
-                    const atendido = lead.estado === "atendido";
+                    const abierto = expandido === lead.id;
                     return (
-                      <TableRow key={lead.id}>
-                        <TableCell className="whitespace-nowrap text-muted-foreground">
-                          {formatter.format(new Date(lead.created_at))}
-                        </TableCell>
-                        <TableCell>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setEstado.mutate({
-                                id: lead.id,
-                                estado: atendido ? "pendiente" : "atendido",
-                              })
-                            }
-                            disabled={setEstado.isPending}
-                            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors ${
-                              atendido
-                                ? "bg-primary/15 text-primary hover:bg-primary/25"
-                                : "bg-muted text-muted-foreground hover:bg-muted/70"
-                            }`}
-                            title="Cambiar estado"
-                          >
-                            {atendido ? "Atendido" : "Pendiente"}
-                          </button>
-                        </TableCell>
-                        <TableCell className="font-medium">{lead.nombre}</TableCell>
-                        <TableCell>{lead.empresa}</TableCell>
-                        <TableCell className="space-y-1">
-                          <a className="block hover:underline" href={`tel:${lead.telefono}`}>
-                            {lead.telefono}
-                          </a>
-                          {lead.email && (
-                            <a
-                              className="block text-muted-foreground hover:underline"
-                              href={`mailto:${lead.email}`}
+                      <Fragment key={lead.id}>
+                        <TableRow>
+                          <TableCell className="whitespace-nowrap text-muted-foreground">
+                            {formatter.format(new Date(lead.created_at))}
+                          </TableCell>
+                          <TableCell>
+                            <select
+                              aria-label={`Estado de la solicitud de ${lead.nombre}`}
+                              value={lead.estado}
+                              disabled={setEstado.isPending}
+                              onChange={(e) =>
+                                setEstado.mutate({ id: lead.id, estado: e.target.value })
+                              }
+                              className={`rounded-full border border-border px-2.5 py-1 text-xs font-medium ${ESTADO_CLASE[lead.estado] ?? "bg-muted text-muted-foreground"}`}
                             >
-                              {lead.email}
+                              {ESTADOS.map((e) => (
+                                <option key={e.value} value={e.value}>
+                                  {e.label}
+                                </option>
+                              ))}
+                            </select>
+                          </TableCell>
+                          <TableCell className="font-medium">{lead.nombre}</TableCell>
+                          <TableCell>{lead.empresa}</TableCell>
+                          <TableCell className="space-y-1">
+                            <a className="block hover:underline" href={`tel:${lead.telefono}`}>
+                              {lead.telefono}
                             </a>
-                          )}
-                        </TableCell>
-                        <TableCell className="max-w-md whitespace-pre-wrap text-muted-foreground">
-                          {lead.descripcion}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => remove.mutate(lead.id)}
-                            disabled={remove.isPending}
-                          >
-                            Eliminar
-                          </Button>
-                        </TableCell>
-                      </TableRow>
+                            {lead.email && (
+                              <a
+                                className="block text-muted-foreground hover:underline"
+                                href={`mailto:${lead.email}`}
+                              >
+                                {lead.email}
+                              </a>
+                            )}
+                          </TableCell>
+                          <TableCell className="max-w-md whitespace-pre-wrap text-muted-foreground">
+                            {lead.descripcion}
+                          </TableCell>
+                          <TableCell className="space-x-1 text-right whitespace-nowrap">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              aria-expanded={abierto}
+                              onClick={() => setExpandido(abierto ? null : lead.id)}
+                            >
+                              <History className="size-4" />
+                              Historial
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => remove.mutate(lead.id)}
+                              disabled={remove.isPending}
+                            >
+                              Eliminar
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                        {abierto && (
+                          <TableRow>
+                            <TableCell colSpan={7} className="bg-muted/30">
+                              <HistorialLead leadId={lead.id} formatter={formatter} />
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </Fragment>
                     );
                   })}
+
                   {!leadsQuery.isLoading && total === 0 && (
                     <TableRow>
                       <TableCell colSpan={7} className="py-10 text-center text-muted-foreground">
