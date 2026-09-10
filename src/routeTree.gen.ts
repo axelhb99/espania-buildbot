@@ -17,6 +17,7 @@ import { Route as GraciasRouteImport } from './routes/gracias'
 import { Route as PanelRouteImport } from './routes/panel'
 import { Route as PrivacidadRouteImport } from './routes/privacidad'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedAdminKpisRouteImport } from './routes/_authenticated/admin_.kpis'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -57,6 +58,11 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminKpisRoute = AuthenticatedAdminKpisRouteImport.update({
+  id: '/admin_/kpis',
+  path: '/admin/kpis',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/panel': typeof PanelRoute
   '/privacidad': typeof PrivacidadRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/admin/kpis': typeof AuthenticatedAdminKpisRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/panel': typeof PanelRoute
   '/privacidad': typeof PrivacidadRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/admin/kpis': typeof AuthenticatedAdminKpisRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/panel': typeof PanelRoute
   '/privacidad': typeof PrivacidadRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin_/kpis': typeof AuthenticatedAdminKpisRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/panel'
     | '/privacidad'
     | '/admin'
+    | '/admin/kpis'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/panel'
     | '/privacidad'
     | '/admin'
+    | '/admin/kpis'
   id:
     | '__root__'
     | '/'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/panel'
     | '/privacidad'
     | '/_authenticated/admin'
+    | '/_authenticated/admin_/kpis'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -186,15 +198,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin_/kpis': {
+      id: '/_authenticated/admin_/kpis'
+      path: '/admin/kpis'
+      fullPath: '/admin/kpis'
+      preLoaderRoute: typeof AuthenticatedAdminKpisRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminKpisRoute: typeof AuthenticatedAdminKpisRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminKpisRoute: AuthenticatedAdminKpisRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

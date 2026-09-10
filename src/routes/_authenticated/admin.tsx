@@ -1,5 +1,5 @@
 import { Fragment, useMemo, useState } from "react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { LoaderCircle, ShieldCheck, Download, History } from "lucide-react";
@@ -320,9 +320,14 @@ function AdminPage() {
               Gestiona los leads enviados desde el formulario de la web.
             </p>
           </div>
-          <Button variant="outline" onClick={signOut}>
-            Cerrar sesión
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" asChild>
+              <Link to="/admin/kpis">KPIs</Link>
+            </Button>
+            <Button variant="outline" onClick={signOut}>
+              Cerrar sesión
+            </Button>
+          </div>
         </header>
 
         {rolesQuery.isLoading ? (
