@@ -47,9 +47,20 @@ Cloudflare crea los registros y el certificado HTTPS automáticamente.
    `create or replace function public.leads_email_aviso()` con
    `remitente text := 'AXHER <web@axher.es>'`.
 
-## Notas
+## Variables de entorno del Worker
 
-- Las variables de Supabase van en `.env` (claves públicas) y se incrustan en el
-  build, así que no hace falta configurarlas en Cloudflare.
+- Las claves **públicas** de Supabase (`VITE_SUPABASE_*` en `.env`) se incrustan
+  en el bundle de cliente durante el build.
+- El middleware de servidor generado (`src/integrations/supabase/auth-middleware.ts`,
+  `client.server.ts`) lee `SUPABASE_URL` / `SUPABASE_PUBLISHABLE_KEY` desde
+  `process.env`, que en el runtime de Cloudflare Workers está vacío. Por eso se
+  declaran en `vite.config.ts` (`nitro.cloudflare.wrangler.vars`) y quedan en el
+  `.output/server/wrangler.json` generado en cada build. Sin esto, todo `/admin`
+  falla con "Missing Supabase environment variable(s)".
+- `SUPABASE_SERVICE_ROLE_KEY` (secreto, solo lo usa `claimFirstAdmin`) **no** se
+  commitea. Si vuelve a hacer falta, configúralo como *secret* del Worker:
+  Cloudflare → Worker → Settings → Variables and Secrets → Add (tipo *Secret*).
+
+## Notas
 - Editar en Lovable sigue funcionando igual: cada cambio se sincroniza a GitHub
   y Cloudflare vuelve a desplegar solo.
